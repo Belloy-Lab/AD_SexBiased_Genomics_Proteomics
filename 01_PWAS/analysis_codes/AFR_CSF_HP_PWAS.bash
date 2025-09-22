@@ -34,51 +34,51 @@ run_rscript() {
 # ----------------------
 
 run_rscript "Job 1" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/AFRad_Females_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sumstats \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/AFRad_Females_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sumstats \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/NGI_CSF_female_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
     --chr 16 \
-    --out /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/CSF/Sex/Female/AFRad_Females_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sex-strat_NGI_CSF_weights.HP.dat"
+    --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/CSF/Sex/Female/AFRad_Females_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sex-strat_NGI_CSF_weights.HP.dat"
 
 run_rscript "Job 2" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/AFRad_Males_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sumstats \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/AFRad_Males_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sumstats \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/NGI_CSF_male_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
     --chr 16 \
-    --out /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/CSF/Sex/Male/AFRad_Males_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sex-strat_NGI_CSF_weights.HP.dat"
+    --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/CSF/Sex/Male/AFRad_Males_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sex-strat_NGI_CSF_weights.HP.dat"
 
 run_rscript "Job 3" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/AFRad_Females_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sumstats \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/AFRad_Females_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sumstats \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/NGI_CSF_male_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
     --chr 16 \
-    --out /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/CSF/Sex/FemaleGWAS_MalePW/AFRad_Females_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sex-strat_NGI_CSF_weights-Males.HP.dat"
+    --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/CSF/Sex/FemaleGWAS_MalePW/AFRad_Females_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sex-strat_NGI_CSF_weights-Males.HP.dat"
 
 run_rscript "Job 4" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/AFRad_Males_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sumstats \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/AFRad_Males_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sumstats \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/NGI_CSF_female_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
     --chr 16 \
-    --out /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/CSF/Sex/MaleGWAS_FemalePW/AFRad_Males_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sex-strat_NGI_CSF_weights-Females.HP.dat"
+    --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/CSF/Sex/MaleGWAS_FemalePW/AFRad_Males_case_control.full.hg38_sex-strat_NGI_CSF_intersected.sex-strat_NGI_CSF_weights-Females.HP.dat"
 
 run_rscript "Job 5" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/AFRad_Females_case_control.full.hg38_NGI_CSF_intersected.sumstats  \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/AFRad_Females_case_control.full.hg38_NGI_CSF_intersected.sumstats  \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_Weights/NGI_CSF_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_Weights/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_LD_Reference_Files/CSF_proteomics_LONGS_PPMI_Stanford_GARFIELD_samples_geno_0.1_mac_10_3506_samples_chr \
     --chr 16 \
-    --out /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/CSF/NonSex/Female/AFRad_Females_case_control.full.hg38_NGI_CSF_intersected.NGI_CSF_weights.HP.dat"
+    --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/CSF/NonSex/Female/AFRad_Females_case_control.full.hg38_NGI_CSF_intersected.NGI_CSF_weights.HP.dat"
 
 run_rscript "Job 6" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/AFRad_Males_case_control.full.hg38_NGI_CSF_intersected.sumstats  \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/AFRad_Males_case_control.full.hg38_NGI_CSF_intersected.sumstats  \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_Weights/NGI_CSF_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_Weights/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_LD_Reference_Files/CSF_proteomics_LONGS_PPMI_Stanford_GARFIELD_samples_geno_0.1_mac_10_3506_samples_chr \
     --chr 16 \
-    --out /storage2/fs1/belloy2/Active/05_Projects/username/PWAS/AFR/CSF/NonSex/Male/AFRad_Males_case_control.full.hg38_NGI_CSF_intersected.NGI_CSF_weights.HP.dat"
+    --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/CSF/NonSex/Male/AFRad_Males_case_control.full.hg38_NGI_CSF_intersected.NGI_CSF_weights.HP.dat"
 
 echo "All jobs completed successfully!"

@@ -1,5 +1,26 @@
 **AD Sex-Biased Genomics & Proteomics**
 
+## Environment Setup (Required Before Running Any Script)
+
+Set the following environment variables before launching jobs or interactive sessions on LSF:
+
+```bash
+export LSF_DOCKER_VOLUMES="/storage1/fs1/belloy/Active:/storage1/fs1/belloy/Active \
+/storage2/fs1/belloy2/Active:/storage2/fs1/belloy2/Active /scratch1/fs1/belloy:/scratch1/fs1/belloy $HOME:$HOME"
+export CONDA_ENVS_DIRS="/storage1/fs1/belloy/Active/conda/envs/"
+export CONDA_PKGS_DIRS="/storage1/fs1/belloy/Active/conda/pkgs/"
+export PATH="/opt/conda/bin:$PATH"
+export LSF_DOCKER_ENTRYPOINT=/bin/bash
+```
+
+### Optional: Launch an interactive session
+
+Use the fusion-project Docker image to test commands interactively (optional).
+
+```bash
+bsub -Is -G compute-belloy-t1 -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -a 'docker(dmr07083/fusion-project:4.3.2)' /bin/bash
+```
+
 ## PWAS Analysis Overview
 
 We performed sex-stratified protein-wide association studies (PWAS) using FUSION (http://gusevlab.org/projects/fusion/). Alzheimer’s disease (AD) GWAS (male, and female) were paired with proteogenomic prediction models (male. female and combined) from brain and CSF to test whether genetically predicted protein abundance is associated with AD in a sex-specific manner—supporting a causal role.
@@ -24,7 +45,7 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PWASMAleBrain.%J.err \
   -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
         --ss EUall_Male.hg19_intersected.sumstats \
         --ss_sex male \
@@ -42,9 +63,9 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
 bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
   -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasFemaleBrain.%J.out \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasFemaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
+  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
         --ss EUall_Female.hg19_intersected.sumstats \
         --ss_sex mafemalele \
@@ -67,7 +88,7 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasMaleBrain.%J.err \
   -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
         --ss EUnoUKB_Male.hg19_intersected.sumstats \
         --ss_sex male \
@@ -85,9 +106,9 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
 bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
   -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasFemaleBrain.%J.out \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasFemaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
+  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
         --ss EUnoUKB_Female.hg19_intersected.sumstats \
         --ss_sex female \
@@ -110,7 +131,7 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasMaleBrain.%J.err \
   -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
         --ss AFR_Male.hg19_intersected.sumstats \
         --ss_sex male \
@@ -128,9 +149,9 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
 bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
   -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasFemaleBrain.%J.out \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasFemaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
+  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
         --ss AFR_Female.hg19_intersected.sumstats \
         --ss_sex female \
@@ -152,9 +173,9 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
 bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
   -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasMaleCSF.%J.out \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasMaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
+  -R 'span[hosts=1] rusage[mem=150000]' -M 150000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
         --ss EUall_Male.hg19_intersected.sumstats \
         --ss_sex male \
@@ -172,9 +193,9 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
 bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
   -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasFemaleBrain.%J.out \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasFemaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
+  -R 'span[hosts=1] rusage[mem=150000]' -M 150000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
         --ss EUall_Female.hg19_intersected.sumstats \
         --ss_sex female \
@@ -202,9 +223,9 @@ bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/EUall_CSF_HP_PWAS.bash
 bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
   -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasMaleCSF.%J.out \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasMaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
+  -R 'span[hosts=1] rusage[mem=150000]' -M 150000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
         --ss EUnoUKB_Male.hg19_intersected.sumstats \
         --ss_sex male \
@@ -222,9 +243,9 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
 bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleCSF -n 3 \
   -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasFemaleCSF.%J.out \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasFemaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
+  -R 'span[hosts=1] rusage[mem=150000]' -M 150000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
         --ss EUnoUKB_Female.hg19_intersected.sumstats \
         --ss_sex female \
@@ -254,7 +275,7 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasMaleCSF.%J.err \
   -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
         --ss AFR_Male.hg19_intersected.sumstats \
         --ss_sex male \
@@ -272,9 +293,9 @@ bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
 bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleCSF -n 3 \
   -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasFemaleCSF.%J.out \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasFemaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
+  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas_wrapper.bash \
+    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
         --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
         --ss AFR_Female.hg19_intersected.sumstats \
         --ss_sex female \
