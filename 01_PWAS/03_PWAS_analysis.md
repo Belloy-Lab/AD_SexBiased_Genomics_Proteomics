@@ -1,7 +1,6 @@
 **AD Sex-Biased Genomics & Proteomics**
 
 ## Environment Setup (Required Before Running Any Script)
-
 Set the following environment variables before launching jobs or interactive sessions on LSF:
 
 ```bash
@@ -18,7 +17,7 @@ export LSF_DOCKER_ENTRYPOINT=/bin/bash
 Use the fusion-project Docker image to test commands interactively (optional).
 
 ```bash
-bsub -Is -G compute-belloy-t1 -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -a 'docker(dmr07083/fusion-project:4.3.2)' /bin/bash
+bsub -Is -G compute-belloy-t1 -q subscription -R 'rusage[mem=150GB] span[hosts=1]' -a 'docker(dmr07083/fusion-project:4.3.2)' /bin/bash
 ```
 
 ## PWAS Analysis Overview
@@ -34,296 +33,73 @@ We performed sex-stratified protein-wide association studies (PWAS) using FUSION
 - Opposite-sex (cross-sex) analysis
     - Male GWAS × female protein weights, and female GWAS × male protein weights. Used as a sensitivity check for sex effects.
 
-PWAS bash wrappers create all necessary directories, manage logs, and organize outputs by tissue, sex, and ancestry panel for reproducibility.
+
+### Input file formats
+
+#### GWAS summary statistics
+Must include alleles, effect sizes (Z or beta), frequency, and sample size.
+
+```bash
+head -4 EUall.cleaned.female.brain.hg19_intersected.sumstats
+A1      A2      Z       SNP     N       FRQ
+T       G       -1.232  rs10875231      636154.000      0.264
+A       G       -1.244  rs186077422     636154.000      0.006
+T       C       -1.036  rs6678176       636154.000      0.329
+```
+
+#### Protein weights
+Provided in pos files listing protein weight sets, IDs, and genomic ranges.
+
+```bash
+head -4 NGI_CSF_female_cis_weights.pos
+WGT     ID      CHR     P0      P1
+WGT/X10037.98__female_weight.wgt.RDat   X10037.98       19      51503097        51503097
+WGT/X10361.25__female_weight.wgt.RDat   X10361.25       12      112943944       112943944
+WGT/X10396.6__female_weight.wgt.RDat    X10396.6        1       150578851       150578851
+```
+
+#### LD reference panel
+Standard PLINK format (.bed/.bim/.fam) separated by chromosome. Used to calculate correlations between SNPs.
 
 ### Brain Proteogenomics analysis
-#### EU_all
+The input parameters for brain analyses are listed in Brain_PWAS_input.csv.
+
+Dry-run first:
 ```bash
-# Male
-bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PWASMAleBrain.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PWASMAleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
-        --ss EUall.cleaned.male.brain.hg19_intersected.sumstats \
-        --ss_sex male \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Males \
-        --pw_m train_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Females \
-        --pw_f train_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/joint_weights \
-        --pw_b train_weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_EUR/1000g_EUR_cm_ch \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
-        --out_file EUall.cleaned.brain.male
-        
-# female
-bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasFemaleBrain.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasFemaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
-        --ss EUall.cleaned.female.brain.hg19_intersected.sumstats \
-        --ss_sex mafemalele \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Males \
-        --pw_m train_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Females \
-        --pw_f train_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/joint_weights \
-        --pw_b train_weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_EUR/1000g_EUR_cm_ch \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
-        --out_file EUall.cleaned.brain.female
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_PWAS_master.bash Brain_PWAS_input.csv --dry-run
 ```
 
-#### EU_noUKB
+Submit for real:
 ```bash
-# Male
-bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasMaleBrain.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasMaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
-        --ss EUnoUKB.cleaned.male.brain.hg19_intersected.sumstats \
-        --ss_sex male \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Males \
-        --pw_m train_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Females \
-        --pw_f train_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/joint_weights \
-        --pw_b train_weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_EUR/1000g_EUR_cm_ch \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
-        --out_file EUnoUKB.cleaned.brain.male
-        
-# female
-bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasFemaleBrain.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasFemaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
-        --ss EUnoUKB.cleaned.male.brain.hg19_intersected.sumstats \
-        --ss_sex female \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Males \
-        --pw_m train_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Females \
-        --pw_f train_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/joint_weights \
-        --pw_b train_weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_EUR/1000g_EUR_cm_ch \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
-        --out_file EUnoUKB.cleaned.brain.female
-```
-
-#### AFR
-```bash
-# Male
-bsub -g /$USER/compute-belloy -q subscription -J PwasMaleBrain -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasMaleBrain.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasMaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
-        --ss AFR.cleaned.male.brain.hg19_intersected.sumstats \
-        --ss_sex male \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Males \
-        --pw_m train_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Females \
-        --pw_f train_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/joint_weights \
-        --pw_b train_weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_EUR/1000g_EUR_cm_ch \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
-        --out_file AFR.cleaned.brain.male
-        
-# female
-bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasFemaleBrain.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasFemaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
-        --ss AFR.cleaned.male.brain.hg19_intersected.sumstats \
-        --ss_sex female \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Males \
-        --pw_m train_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Females \
-        --pw_f train_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/joint_weights \
-        --pw_b train_weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_EUR/1000g_EUR_cm_ch \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
-        --out_file AFR.cleaned.brain.female
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_PWAS_master.bash Brain_PWAS_input.csv
 ```
 
 ### CSF Proteogenomics analysis
-#### EU_all
+The input parameters for CSF analyses are listed in CSF_PWAS_input.csv.
+
 ```bash
-# Male
-bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasMaleCSF.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasMaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 150000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
-        --ssx EUall.cleaned.male.CSF.sexstrat.sumstats \
-        --ssn EUall.cleaned.male.CSF.nonsex.sumstats \
-        --ss_sex male \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_m NGI_CSF_male_cis_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_f NGI_CSF_female_cis_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_b NGI_CSF_cis-weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
-        --out_file EUall.cleaned.CSF.male
-        
-# female
-bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleBrain -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasFemaleBrain.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/PwasFemaleBrain.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 150000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
-        --ssx EUall.cleaned.female.CSF.sexstrat.sumstats \
-        --ssn EUall.cleaned.female.CSF.nonsex.sumstats \
-        --ss_sex female \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_m NGI_CSF_male_cis_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_f NGI_CSF_female_cis_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_b NGI_CSF_cis-weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all \
-        --out_file EUall.cleaned.CSF.female
-
-
-
-#### EU_noUKB
-```bash
-# Male
-bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasMaleCSF.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasMaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 150000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
-        --ssx EUnoUKB.cleaned.male.CSF.sexstrat.sumstats \
-        --ssn EUnoUKB.cleaned.male.CSF.nonsex.sumstats \
-        --ss_sex male \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_m NGI_CSF_male_cis_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_f NGI_CSF_female_cis_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_b NGI_CSF_cis-weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
-        --out_file EUnoUKB.cleaned.CSF.male
-        
-# female
-bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleCSF -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasFemaleCSF.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/PwasFemaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=150000]' -M 150000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
-        --ssx EUnoUKB.cleaned.female.CSF.sexstrat.sumstats \
-        --ssn EUnoUKB.cleaned.female.CSF.nonsex.sumstats \
-        --ss_sex female \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_m NGI_CSF_male_cis_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_f NGI_CSF_female_cis_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_b NGI_CSF_cis-weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB \
-        --out_file EUnoUKB.cleaned.CSF.female
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PWAS_master.bash CSF_PWAS_input.csv --dry-run
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PWAS_master.bash CSF_PWAS_input.csv
 ```
 
-#### AFR
+### CSF HP weights analysis
+The same input parameters file CSF_PWAS_input.csv culd be used to HP analysis.
+
 ```bash
-# Male
-bsub -g /$USER/compute-belloy -q subscription -J PwasMaleCSF -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasMaleCSF.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasMaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
-        --ssx AFR.cleaned.male.CSF.sexstrat.sumstats \
-        --ssn AFR.cleaned.male.CSF.nonsex.sumstats \
-        --ss_sex male \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_m NGI_CSF_male_cis_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_f NGI_CSF_female_cis_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_b NGI_CSF_cis-weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
-        --out_file AFR.cleaned.CSF.male
-        
-# female
-bsub -g /$USER/compute-belloy -q subscription -J PwasFemaleCSF -n 3 \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasFemaleCSF.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/PwasFemaleCSF.%J.err \
-  -R 'span[hosts=1] rusage[mem=100000]' -M 100000 -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash \
-        --ss_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
-        --ssx AFR.cleaned.female.CSF.sexstrat.sumstats \
-        --ssn AFR.cleaned.female.CSF.nonsex.sumstats \
-        --ss_sex female \
-        --pw_m_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_m NGI_CSF_male_cis_weights.pos \
-        --pw_f_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_f NGI_CSF_female_cis_weights.pos \
-        --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt \
-        --pw_b NGI_CSF_cis-weights.pos \
-        --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
-        --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR \
-        --out_file AFR.cleaned.CSF.female
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PWAS_master_HP.bash CSF_PWAS_input.csv --dry-run
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PWAS_master_HP.bash CSF_PWAS_input.csv
 ```
 
 
-```bash
-# EUall
-bsub -g /$USER$/compute-belloy -J EUCSFHPall -n 2 -N \
--o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/EUall_CSF_HP_PWAS.%J.out \
--e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/EUall_CSF_HP_PWAS.%J.err \
--q subscription -R 'rusage[mem=100GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 -a 'docker(dmr07083/fusion-project:4.3.2)' \
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/EUall_CSF_HP_PWAS.bash
+### Typical Output Files
+Each analysis generates the following key outputs (naming depends on --out_GWAS and input CSV):
 
-# HP
-bsub -g /$USER$/compute-belloy -J EUnoUKNCSFHP -n 1 -N \
--o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/EUnoUKNCSFHP.%J.out \
--e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/EUnoUKNCSFHP.%J.err \
--q subscription -R 'rusage[mem=100GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 -a 'docker(dmr07083/fusion-project:4.3.2)' \
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/EUnoUKB_CSF_HP_PWAS.bash
+- Log files:
+  - logs/PwasMaleBrain.<jobID>.out and logs/PwasMaleBrain.<jobID>.err
 
-# HP
-bsub -g /$USER/compute-belloy -J AFRCSFHP -n 1 -N \
--o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/AFRCSFHP.%J.out \
--e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/AFRCSFHP.%J.err \
--q subscription -R 'rusage[mem=60GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 -a 'docker(dmr07083/fusion-project:4.3.2)' \
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/AFR_CSF_HP_PWAS.bash
-```
+- PWAS association results:
+  - <out_dir>/<tissue>/<sex>/*.chr.dat
 
+## License (MIT)
+
+Copyright (c) 2025 Sathesh K. Sivasankaran

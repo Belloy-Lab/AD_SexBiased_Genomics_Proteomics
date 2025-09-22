@@ -75,7 +75,7 @@ tail -n +2 "${CSV_FILE}" | while IFS=',' read -r cohort ss_dir ssx ssn sex out_d
       --pw_m NGI_CSF_male_cis_weights.pos
       --pw_f_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt
       --pw_f NGI_CSF_female_cis_weights.pos
-      --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt
+      --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_Weights/
       --pw_b NGI_CSF_cis-weights.pos
       --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_
       --out_dir "${out_dir}"

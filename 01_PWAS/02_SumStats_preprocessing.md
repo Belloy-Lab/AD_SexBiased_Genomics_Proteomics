@@ -2,7 +2,12 @@
 
 ## Sumstats Pre-Processing Overview
 
-This repository documents the pre-processing of **sex-stratified GWAS summary statistics** for PWAS using **brain** and **CSF** proteogenomics datasets. Pipelines include genome build harmonization (liftover), LD-panel intersection, and LDSC-compatible cleaning.
+This repository documents the pre-processing of sex-stratified GWAS summary statistics for PWAS using brain and CSF proteogenomic datasets.
+
+Pipelines include:
+- Genome build harmonization (hg38 → hg19 liftover when required)
+- LD reference panel intersection
+- Standardization/cleaning with LDSC for PWAS compatibility
 
 ---
 
@@ -32,15 +37,18 @@ bsub -Is -G compute-belloy-t1 -q subscription -R 'rusage[mem=40GB] span[hosts=1]
 ---
 
 ## Preprocessing for **Brain** PWAS
+The brain proteome weights are in hg19 (GRCh37). GWAS sumstats (initially in hg38) are:
 
-The brain proteome weights are in **hg19 (GRCh37)**. Sex-stratified GWAS sumstats are first **lifted from hg38 → hg19** using UCSC LiftOver, then **intersected with a 1KGP LD reference panel**, and finally cleaned with LDSC’s `munge_sumstats.py`.
+- Lifted over (hg38 → hg19) using UCSC [LiftOver](https://genome-store.ucsc.edu/).
+  - Chain file: [hg38ToHg19.over.chain.gz](https://hgdownload.cse.ucsc.edu/goldenpath/hg38/liftOver/hg38ToHg19.over.chain.gz).
 
-- Chain file: [hg38ToHg19.over.chain.gz](https://hgdownload.cse.ucsc.edu/goldenpath/hg38/liftOver/hg38ToHg19.over.chain.gz)
-- Intersection: 1KGP **EUR** panel for EU cohorts; 1KGP **AFR-admixed** panel for AFR cohorts.
-- Cleaning: `munge_sumstats.py` (LDSC) to standardize/filter; remove SNPs with missing values.
-  - LDSC repo: https://github.com/bulik/ldsc
+- Intersected with ancestry-specific LD reference panels
+  - LD reference: 1KGP EUR (for EU cohorts) or AFR-admixed (for AFR cohorts)
 
-### EUR LD reference panel (build GRCh37)
+- Cleaned with with LDSC’s `munge_sumstats.py`.
+  - Cleaning: LDSC standardizes headers and removes SNPs with missing or invalid fields
+
+### EUR LD reference panel
 
 ```bash
 bsub -g /$USER/compute-belloy -J EURLD -n 1 -N \
@@ -48,10 +56,10 @@ bsub -g /$USER/compute-belloy -J EURLD -n 1 -N \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/EUR1KGP_GR37.%J.err \
   -q subscription -R 'rusage[mem=32GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  Rscript /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/EU_all/create_LDSC_GRCh37_EUR_p1.R
+  Rscript /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/EU_all/LDSC_GRCh37_EUR.R
 ```
 
-### AFR-admixed LD reference panel (build GRCh37)
+### AFR-admixed LD reference panel
 
 ```bash
 bsub -g /$USER/compute-belloy -J AFRLDpanel -n 1 -N \
@@ -59,107 +67,50 @@ bsub -g /$USER/compute-belloy -J AFRLDpanel -n 1 -N \
   -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/AFR-ad_LD_ref_panel.%J.err \
   -q subscription -R 'rusage[mem=30GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
   -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  Rscript /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/AFR/create_LDSC_GRCh37_AFR-admixed.R \
+  Rscript /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/AFR/LDSC_GRCh37_AFR.R \
       --PATH_plink1.9 /usr/bin/plink1.9 \
       --PATH_plink2 /usr/bin/plink2
 ```
 
-### Brain: EU_all
+### Example input formats
+#### GWAS sumstats
 
 ```bash
-# Male
-bsub -g /$USER/compute-belloy -J Br_PreClean_Male_EUall -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/Br_PreClean_male_EUall.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/Br_PreClean_male_EUall.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Brain_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_UKB_FinnGen_Males_case_control_reduced_bias.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS EUall.cleaned.male.brain \
-    --Nsize_GWAS 507675 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_all \
-    --pop EUR
-
-# Female
-bsub -g /$USER/compute-belloy -J Br_PreClean_Female_EUall -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/Br_PreClean_female_EUall.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/Br_PreClean_female_EUall.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Brain_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_UKB_FinnGen_Females_case_control_reduced_bias.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS EUall.cleaned.female.brain \
-    --Nsize_GWAS 636154 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_all \
-    --pop EUR
+head -4 ADGC_ADSP_UKB_FinnGen_Males_case_control_reduced_bias.gwama.clean.gen090.exclude_APOE_region.shared_var
+posID   SNP     CHR     BP      ALLELE1 ALLELE0 A1FREQ  BETA    SE      P       Q_V     Q_P     N_incl  META_DIR
+1:713463:TATTA:T        rs531378844     1       713463  T       TATTA   0.003879        -0.0425036159867374     0.115255916834982       0.712308        4.155881        0.245116        503340  +++-
+1:727233:G:A    rs151190501     1       727233  A       G       0.019182        0.0855619103535584      0.0439551962674664      0.051602        2.721039        0.256527        500236  +?++
+1:732994:G:A    rs138476838     1       732994  A       G       0.014428        0.00331749103631728     0.0755537825119515      0.964962        3.203519        0.361298        503058  +--+
 ```
 
-### Brain: EU_noUKB
+#### LD reference panel
 
 ```bash
-# Male
-bsub -g /$USER/compute-belloy -J Br_PreClean_Male_noUKB -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/Br_PreClean_male_noUKB.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/Br_PreClean_male_noUKB.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Brain_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_FinnGen_Males_case_control.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS EUnoUKB.cleaned.male.brain \
-    --Nsize_GWAS 230632 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_noUKB \
-    --pop EUR
+head -4 1000g_EUR_cm.snplist
+SNP     A1      A2
+rs367896724     AC      A
+rs555500075     TA      T
+rs376342519     CCGCCGTTGCAAAGGCGCGCCG  C
 
-# Female
-bsub -g /$USER/compute-belloy -J Br_PreClean_Female_noUKB -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/Br_PreClean_female_noUKB.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/Br_PreClean_female_noUKB.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Brain_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_FinnGen_Females_case_control.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS EUnoUKB.cleaned.female.brain \
-    --Nsize_GWAS 300237 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_noUKB \
-    --pop EUR
+head -4 1000g_EUR_cm.tab
+CHR     SNP     ALT     REF     BP      posID
+1       rs367896724     AC      A       10177   1:10177
+1       rs555500075     TA      T       10352   1:10352
+1       rs376342519     CCGCCGTTGCAAAGGCGCGCCG  C       10616   1:10616
 ```
 
-### Brain: AFR (AFR-admixed)
+### Running brain pre-cleanup
+The input parameters for brain analyses are listed in Brain_PreCleanup_input.csv.
 
+Dry-run first:
 ```bash
-# Male
-bsub -g /$USER/compute-belloy -J Br_PreClean_Male_AFR -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/Br_PreClean_male_AFR.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/Br_PreClean_male_AFR.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Brain_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_sex_apoe4_GWAS_AD_AFR \
-    --in_GWAS AFR_admixed_Male_case_control.gwama.clean.full.txt \
-    --out_GWAS AFR.cleaned.male.brain \
-    --Nsize_GWAS 2116 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/AFR \
-    --pop AFR
-
-# Female
-bsub -g /$USER/compute-belloy -J Br_PreClean_Female_AFR -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/Br_PreClean_female_AFR.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/Br_PreClean_female_AFR.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Brain_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_sex_apoe4_GWAS_AD_AFR \
-    --in_GWAS AFR_admixed_Females_case_control.gwama.clean.full.txt \
-    --out_GWAS AFR.cleaned.female.brain \
-    --Nsize_GWAS 5149 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/AFR \
-    --pop AFR
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_PreCleanup_master.bash Brain_PreCleanup_input.csv --dry-run
 ```
 
+Submit for real:
+```bash
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_PreCleanup_master.bash Brain_PreCleanup_input.csv
+```
 ---
 
 ## Preprocessing for **CSF** PWAS
@@ -167,114 +118,43 @@ bsub -g /$USER/compute-belloy -J Br_PreClean_Female_AFR -n 1 -N \
 The **CSF protein weights** and sex-stratified GWAS sumstats used here are both in **hg38**, so no liftover is required. We intersect sumstats with two LD panels:
 
 1. A **non–sex-stratified** LD reference panel derived from the CSF cohort described in:
-   
-   Western, D., et al. (2024). *Proteogenomic analysis of human cerebrospinal fluid identifies neurologically relevant regulation and implicates causal proteins for Alzheimer’s disease*. **Nature Genetics**, 56, 2672–2684. https://doi.org/10.1038/s41588-024-01972-8
+     Western, D., et al. (2024). *Proteogenomic analysis of human cerebrospinal fluid identifies neurologically relevant regulation and implicates causal proteins for Alzheimer’s disease*. **Nature Genetics**, 56, 2672–2684. https://doi.org/10.1038/s41588-024-01972-8
 
 2. A **sex-stratified** LD reference panel generated analogously on sex-specific subsets of the cohort.
-   
-   > **TODO:** Add exact file paths and generation script references for the sex-stratified CSF LD panel.
+     > **TODO:** Add exact file paths and generation script references for the sex-stratified CSF LD panel.
 
-After intersection, sumstats are cleaned with `munge_sumstats.py`, and SNPs with missing values are removed.
+After intersection, sumstats are cleaned with `munge_sumstats.py` and filtered to remove missing SNPs.
 
-### CSF: EU_all
-
-```bash
-# Male
-bsub -g /$USER/compute-belloy -J CSF_PreClean_Male_EUall -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/CSF_PreClean_male_EUall.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/CSF_PreClean_male_EUall.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/CSF_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_UKB_FinnGen_Males_case_control_reduced_bias.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS EUall.cleaned.male.CSF \
-    --Nsize_GWAS 507675 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_all
-
-# Female
-bsub -g /$USER/compute-belloy -J CSF_PreClean_Female_EUall -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/CSF_PreClean_female_EUall.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/CSF_PreClean_female_EUall.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/CSF_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_UKB_FinnGen_Females_case_control_reduced_bias.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS EUall.cleaned.female.CSF \
-    --Nsize_GWAS 636154 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_all
-```
-
-### CSF: EU_noUKB
+### Running CSF pre-cleanup
+The input parameters for CSF analyses are listed in CSF_PreCleanup_input.csv.
 
 ```bash
-# Male
-bsub -g /$USER/compute-belloy -J CSF_PreClean_Male_noUKB -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/CSF_PreClean_male_noUKB.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/CSF_PreClean_male_noUKB.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/CSF_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_FinnGen_Males_case_control.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS EUnoUKB.cleaned.male.CSF \
-    --Nsize_GWAS 230632 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_noUKB
-
-# Female
-bsub -g /$USER/compute-belloy -J CSF_PreClean_Female_noUKB -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/CSF_PreClean_female_noUKB.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/logs/CSF_PreClean_female_noUKB.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/CSF_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_FinnGen_Females_case_control.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS EUnoUKB.cleaned.female.CSF \
-    --Nsize_GWAS 300237 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_noUKB
-```
-
-### CSF: AFR (AFR-admixed)
-
-```bash
-# Male
-bsub -g /$USER/compute-belloy -J CSF_PreClean_Male_AFR -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/CSF_PreClean_male_AFR.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/CSF_PreClean_male_AFR.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/CSF_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_sex_apoe4_GWAS_AD_AFR \
-    --in_GWAS AFR_admixed_Male_case_control.gwama.clean.full.txt \
-    --out_GWAS AFR.cleaned.male.CSF \
-    --Nsize_GWAS 2116 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/AFR
-
-# Female
-bsub -g /$USER/compute-belloy -J CSF_PreClean_Female_AFR -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/CSF_PreClean_female_AFR.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/CSF_PreClean_female_AFR.%J.err \
-  -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/CSF_PreCleanup_wrapper.bash \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_sex_apoe4_GWAS_AD_AFR \
-    --in_GWAS AFR_admixed_Females_case_control.gwama.clean.full.txt \
-    --out_GWAS AFR.cleaned.female.CSF \
-    --Nsize_GWAS 5149 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/AFR
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PreCleanup_master.bash CSF_PreCleanup_input.csv --dry-run
+bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PreCleanup_master.bash CSF_PreCleanup_input.csv
 ```
 
 ---
 
 ## Notes & Sanity Checks
 
-- Ensure **`--Nsize_GWAS`** matches the effective sample size for the given sex-stratified subset.
-- `--pop` controls which LD panel is used inside the wrappers (EUR vs AFR-admixed). Confirm the panel paths in the wrapper match the examples above.
-- For **brain** runs, confirm liftover hg38→hg19 is applied **before** intersecting with hg19 LD panels.
-- For **CSF** runs (hg38 throughout), confirm all inputs/panels are hg38 and **skip liftover**.
-- Use `span[hosts=1]` in `-R` to keep a single-node allocation (useful for file IO locality).
+- **Check `--Nsize_GWAS` in the input CSV**  
+  Make sure the sample size column matches the effective N for the specific GWAS subset (male, female, or combined).  
+  This value is passed directly to `munge_sumstats.py` and is critical for downstream LDSC/PWAS scaling.  
+
+- **Confirm LD panel selection**  
+  Each wrapper script hard-codes LD panel paths. Double-check that:  
+  - Brain analyses point to the correct 1KGP (EUR or AFR-admixed) reference.  
+  - CSF analyses point to the correct sex-stratified or combined LD reference files.  
+
+- **Genome build consistency**  
+  - Brain workflow: GWAS are lifted from **hg38 → hg19** before LD intersection.  
+  - CSF workflow: Everything is **hg38**, so liftover is not applied.  
+
+- **Output naming**  
+  Ensure `--out_GWAS` in the CSV uniquely identifies each run. Filenames are constructed using this prefix plus suffixes (e.g., `.CSFsexstrat.txt`, `.hg19_1KG_EURintersected.txt`).  
+
+- **Cluster job allocation**  
+  Use `span[hosts=1]` in the LSF `-R` resource string to guarantee single-node allocation. This avoids performance issues from distributed IO.  
 
 ---
 
