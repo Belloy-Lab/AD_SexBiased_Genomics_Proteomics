@@ -34,7 +34,7 @@ run_rscript() {
 # ----------------------
 
 run_rscript "Job 1" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/ADGC_ADSP_FinnGen_Females_cc.gen090.no_APOE.shared_var.hg38_sex-strat_NGI_CSF_intersected.sumstats \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EUnoUKB_Female.hg19_intersected.sumstats \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/NGI_CSF_female_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
@@ -42,7 +42,7 @@ run_rscript "Job 1" "Rscript /storage1/fs1/belloy/Active/01_References/02_Comman
     --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/CSF/Sex/Female/ADGC_ADSP_FinnGen_Females_cc.gen090.noAPOE.shared_var.hg38.sex-strat_NGI_CSF_weights.HP.dat"
 
 run_rscript "Job 2" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/ADGC_ADSP_FinnGen_Males_cc.gen090.no_APOE.shared_var.hg38_sex-strat_NGI_CSF_intersected.sumstats \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EUnoUKB_Female.hg19_intersected.sumstats \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/NGI_CSF_male_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
@@ -50,7 +50,7 @@ run_rscript "Job 2" "Rscript /storage1/fs1/belloy/Active/01_References/02_Comman
     --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/CSF/Sex/Male/ADGC_ADSP_FinnGen_Males_cc.gen090.noAPOE.shared_var.hg38.sex-strat_NGI_CSF_weights.HP.dat"
 
 run_rscript "Job 3" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/ADGC_ADSP_FinnGen_Females_cc.gen090.no_APOE.shared_var.hg38_sex-strat_NGI_CSF_intersected.sumstats \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EUnoUKB_Female.hg19_intersected.sumstats \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/NGI_CSF_male_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \
@@ -58,7 +58,7 @@ run_rscript "Job 3" "Rscript /storage1/fs1/belloy/Active/01_References/02_Comman
     --out /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/CSF/Sex/FemaleGWAS_MalePW/ADGC_ADSP_FinnGen_Females_cc.gen090.noAPOE.shared_var.hg38.sex-strat_NGI_CSF_weights-Males.HP.dat"
 
 run_rscript "Job 4" "Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
-    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB/ADGC_ADSP_FinnGen_Males_cc.gen090.no_APOE.shared_var.hg38_sex-strat_NGI_CSF_intersected.sumstats \
+    --sumstats /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EUnoUKB_Female.hg19_intersected.sumstats \
     --weights /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/NGI_CSF_female_cis_HP-weights.pos \
     --weights_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt/ \
     --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_ \

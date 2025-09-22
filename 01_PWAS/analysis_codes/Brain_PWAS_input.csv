@@ -1,0 +1,7 @@
+cohort,ss_dir,ss,sex,out_dir,out_file
+EU_all,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all,EUall.cleaned.male.brain.hg19_intersected.sumstats,male,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all,EUall.cleaned.brain.male
+EU_all,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all,EUall.cleaned.female.brain.hg19_intersected.sumstats,female,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all,EUall.cleaned.brain.female
+EU_noUKB,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB,EUnoUKB.cleaned.male.brain.hg19_intersected.sumstats,male,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB,EUnoUKB.cleaned.brain.male
+EU_noUKB,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB,EUnoUKB.cleaned.female.brain.hg19_intersected.sumstats,female,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB,EUnoUKB.cleaned.brain.female
+AFR,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR,AFR.cleaned.male.brain.hg19_intersected.sumstats,male,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR,AFR.cleaned.brain.male
+AFR,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR,AFR.cleaned.female.brain.hg19_intersected.sumstats,female,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR,AFR.cleaned.brain.female

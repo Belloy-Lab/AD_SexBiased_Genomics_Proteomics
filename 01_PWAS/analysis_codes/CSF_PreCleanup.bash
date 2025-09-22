@@ -154,7 +154,7 @@ munge_sumstats.py --sumstats ${OUT_DIR}/"${OUT_GWAS}.CSFsexstrat.txt" \
   --p P \
   --frq A1FREQ \
   --N $NSIZE_GWAS \
-  --out ${OUT_DIR}/"${OUT_GWAS}.CSFsexstrat"
+  --out ${OUT_DIR}/"${OUT_GWAS}.sexstrat"
   
 munge_sumstats.py --sumstats ${OUT_DIR}/"${OUT_GWAS}.CSFnonsex.txt" \
   --keep-maf \
@@ -165,7 +165,7 @@ munge_sumstats.py --sumstats ${OUT_DIR}/"${OUT_GWAS}.CSFnonsex.txt" \
   --p P \
   --frq A1FREQ \
   --N $NSIZE_GWAS \
-  --out ${OUT_DIR}/"${OUT_GWAS}.CSFnonsex"
+  --out ${OUT_DIR}/"${OUT_GWAS}.nonsex"
 
 # navigate to working directory
 cd "${OUT_DIR}"
@@ -176,9 +176,9 @@ gzip -d "${OUT_GWAS}.CSFsexstrat.sumstats.gz" "${OUT_GWAS}.CSFnonsex.sumstats.gz
 # STEP 3: Final R cleanup on munged
 # ==============================
 Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Post_mungestat_cleanup.R \
-    --file "${OUT_GWAS}.CSFsexstrat.sumstats" \
+    --file "${OUT_GWAS}.sexstrat.sumstats" \
     --dir "${OUT_DIR}"
 
 Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Post_mungestat_cleanup.R \
-    --file "${OUT_GWAS}.CSFnonsex.sumstats" \
+    --file "${OUT_GWAS}.nonsex.sumstats" \
     --dir "${OUT_DIR}"
