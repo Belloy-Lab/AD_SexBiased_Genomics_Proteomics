@@ -1,0 +1,10 @@
+Gene_name1,Gene_name2,Level,top_AD_snp,top_AD_chr,top_AD_bp,top_AD_A1,top_AD_A2,top_pQTL_snp,top_pQTL_chr,top_pQTL_bp,top_pQTL_A1,top_pQTL_A2,top_AD_r2,top_AD_r2_snp,top_AD_r2_chr,top_AD_r2_bp,top_AD_r2_A1,top_AD_r2_A2,top_pQTL_r2,top_pQTL_r2_snp,top_pQTL_r2_chr,top_pQTL_r2_bp,top_pQTL_r2_A1,top_pQTL_r2_A2
+HP,HP,Primary,rs79940707,16,72147654,T,C,,,,,,1,rs79940707,16,72147654,T,C,,,,,,
+HP,HP,Primary,rs79940707,16,72147654,T,C,,,,,,0.94427,rs35909200,16,72122767,G,T,,,,,,
+HP,HP,Primary,rs79940707,16,72147654,T,C,,,,,,0.943442,rs71391445,16,72171122,G,GA,,,,,,
+HP,HP,Primary,rs79940707,16,72147654,T,C,,,,,,0.935231,rs9930957,16,72116024,T,C,,,,,,
+HP,HP,Primary,rs79940707,16,72147654,T,C,,,,,,0.9319,rs35549608,16,72193499,C,T,,,,,,
+HP,HP,Primary,rs79940707,16,72147654,T,C,,,,,,0.924019,rs763665,16,72044144,T,C,,,,,,
+HP,HP,Primary,rs79940707,16,72147654,T,C,,,,,,0.920998,rs11075921,16,72098230,T,C,,,,,,
+HP,HP,Primary,rs79940707,16,72147654,T,C,,,,,,0.885109,rs34417180,16,72185857,A,C,,,,,,
+HP,HP,Primary,,,,,,rs77303550,16,72045758,T,C,,,,,,,1,rs77303550,16,72045758,T,C

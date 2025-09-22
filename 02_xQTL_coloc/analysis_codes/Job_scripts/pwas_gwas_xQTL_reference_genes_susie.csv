@@ -1,0 +1,3 @@
+chrom,bp_38_start,bp_38_end,bp_38_med,locus_index,stratum,discovery
+4,158625175,159856061,159240618,RAPGEF2,Female,Brain
+1,155035691,155235691,155135691,GBA,Male,GWAS
