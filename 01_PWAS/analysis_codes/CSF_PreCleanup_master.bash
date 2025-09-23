@@ -5,7 +5,8 @@ set -euo pipefail
 # CSF Pre-Cleanup job submitter (LSF bsub)
 # One row in CSV = one job submission
 # -------------------------------
-LOG_ROOT="/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS"
+# NOTE: Update the script path below if the location changes
+LOG_ROOT="PWAS"
 
 CSV_FILE="${1:-}"
 DRY_RUN="${2:-}"
@@ -57,7 +58,8 @@ tail -n +2 "${CSV_FILE}" | while IFS=',' read -r cohort_dir cohort_tag sex in_di
     -G compute-belloy-t1
     -sla compute-belloy-t1
     -a docker(dmr07083/fusion-project:4.3.2)
-    bash /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/CSF_PreCleanup.bash
+    # NOTE: Update the script path below if the location changes
+    bash PWAS/analysis_codes/CSF_PreCleanup.bash
       --in_dir "${in_dir}"
       --in_GWAS "${in_GWAS}"
       --out_GWAS "${out_GWAS}"

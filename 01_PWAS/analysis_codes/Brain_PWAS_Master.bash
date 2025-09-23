@@ -65,17 +65,18 @@ tail -n +2 "${CSV_FILE}" | while IFS=',' read -r cohort ss_dir ss sex out_dir ou
     -G compute-belloy-t1
     -sla compute-belloy-t1
     -a docker(dmr07083/fusion-project:4.3.2)
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_pwas_wrapper.bash
+    # NOTE: Update the script path below if the location changes
+    bash PWAS/analysis_codes/Brain_pwas_wrapper.bash
       --ss_dir "${ss_dir}"
       --ss "${ss}"
       --ss_sex "${sex}"
-      --pw_m_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Males
-      --pw_m train_weights.pos
-      --pw_f_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/Females   # <-- FIX
-      --pw_f train_weights.pos
-      --pw_b_dir /storage1/fs1/belloy/Active/02_Data/03_Freeze/Wingoetal2023_protein_weights/joint_weights  # <-- FIX
-      --pw_b train_weights.pos
-      --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_EUR/1000g_EUR_cm_ch
+      --pw_m_dir PWAS/Wingoetal2023_protein_weights/Brain/Males # <-- FIX the male brin protein weights path
+      --pw_m train_weights.pos # <-- fix the file name
+      --pw_f_dir PWAS/Wingoetal2023_protein_weights/Brain/Females   # <-- FIX the female brin protein weights path
+      --pw_f train_weights.pos # <-- fix the file name
+      --pw_b_dir PWAS/Wingoetal2023_protein_weights/Brain/joint # <-- FIX the joint (both) brin protein weights path
+      --pw_b train_weights.pos # <-- fix the file name
+      --ref_ld_chr 1000G_Grch37/1KG_EUR/file_name_by_chr(1-22) # <-- FIX 1000G LD ref panel path
       --out_dir "${out_dir}"
       --out_file "${out_file}"
   )

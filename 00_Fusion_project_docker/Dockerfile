@@ -55,8 +55,8 @@ RUN R -e "install.packages('BiocManager', repos='http://cran.rstudio.com/')" && 
     R -e "BiocManager::install(pkgs=c( \
         'clusterProfiler','AnnotationDbi','DOSE','enrichplot','GO.db','GOSemSim','qvalue', \
         'ReactomePA','graphite','reactome.db','HDO.db','BiocParallel','fgsea','AnnotationHub', \
-        'org.Hs.eg.db','ensembldb','EnsDb.Hsapiens.v75','sva','genefilter','BiocFileCache', \
-        'biomaRt','rrvgo'), ask = FALSE)"
+        'org.Hs.eg.db','ensembldb','EnsDb.Hsapiens.v75', 'EnsDb.Hsapiens.v86','sva','genefilter','BiocFileCache', \
+        'biomaRt','rrvgo', 'ComplexHeatmap', 'simplifyEnrichment'), ask = FALSE)"
 
 # Additional GitHub R packages
 RUN R -e "install.packages(c('locuszoomr', 'ggtree'), dependencies=TRUE, repos='http://cran.rstudio.com/')" && \

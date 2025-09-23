@@ -108,5 +108,5 @@ Rscript /storage2/fs1/belloy2/Active/04_Code/$USER/Pathway/Enrichment_visualizat
 ![**Figure 1.**: Heatmap showing enriched pathways - female. ](figures/male_heatmap.jpg)
 
 ---
-
-This modular pipeline supports scalable and reproducible enrichment analysis for sex-stratified gene sets.
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).

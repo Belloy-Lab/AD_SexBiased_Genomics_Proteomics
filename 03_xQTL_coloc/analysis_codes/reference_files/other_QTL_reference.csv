@@ -1,0 +1,11 @@
+﻿study,tissue,filepath,qtl_type
+ARIC,blood,/storage1/fs1/belloy/Active/02_Data/01_Incoming/QTL/ARIC/EA/seqid.txt,pQTL
+BrainMeta,DLPFC,/storage1/fs1/belloy/Active/05_Projects/noahc/opt_QTL/liftover/lifted_data/BrainMeta_all_caQTL_appended_lifted_to38.txt,caQTL
+kosoy,microglia,/storage1/fs1/belloy/Active/02_Data/01_Incoming/QTL/Kosoy_2022/caQTL/microglia_macrophage_meta-caQTL_summary_result.gz,caQTL
+xQTLServe,DLPFC,/storage1/fs1/belloy/Active/02_Data/01_Incoming/QTL/xQTLServe/haQTLs/xQTLServe_haQTL_appended_lifted_to38.csv,haQTL
+BrainMeta,DLPFC,/storage1/fs1/belloy/Active/05_Projects/noahc/opt_QTL/liftover/lifted_data/BrainMeta_all_mQTL_appended_lifted_to38.txt,mQTL
+xQTLServe,DLPFC,/storage1/fs1/belloy/Active/02_Data/01_Incoming/QTL/xQTLServe/mQTLs/xQTLServe_mQTL_appended_lifted_to38.csv,mQTL
+NGI,all_CSF,/storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/Other_Files/Somalogic_Complete_Analyte_list.txt,pQTL
+NGI,female_CSF,/storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/Other_Files/Somalogic_Complete_Analyte_list.txt,pQTL
+NGI,male_CSF,/storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/Other_Files/Somalogic_Complete_Analyte_list.txt,pQTL
+UKB,blood,/storage1/fs1/belloy/Active/02_Data/01_Incoming/QTL/ukb/,pQTL

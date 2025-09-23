@@ -1,16 +1,5 @@
 #!/usr/bin/env Rscript
 
-
-############################################################
-#create circos plots instead of using the miami plot
-## Michael's preferred option 3: 1 circos plot with sex-stratified PWAS results per tissue
-## (outer most - inner circle: female brain, male brain, female CSF, male CSF)
-# figure 2 dotplot matrix for PWAS manuscript main figure
-# written by Danielle M. Read 
-############################################################
-
-#load library
-#load the packages
 suppressPackageStartupMessages({
   library(data.table)
   library(plyr)
@@ -32,6 +21,7 @@ suppressPackageStartupMessages({
   library(scales)
   library(patchwork)
   library(forcats)
+  library(optparse)
 })
 
 # Define command line options
@@ -49,9 +39,6 @@ opt <- parse_args(OptionParser(option_list = option_list))
 dir <- opt$dir
 setwd(dir)
 
-# dir = "/storage2/fs1/belloy2/Active/05_Projects/sivas/dreidRep/sumstats/Final_plots/"
-# f = fread(paste0(dir, "ADGC_ADSP_UKB_FinnGen_Females_cc_rb.gen090.noAPOE.shared_var.W23nCSF.hg38_PWAS_noMHC_ext2Mb_top-female-specific-genes_ExDMR.txt"))
-# m = fread(paste0(dir, "ADGC_ADSP_UKB_FinnGen_Males_cc_rb.gen090.noAPOE.shared_var.W23nCSF.hg38_PWAS_noMHC_ext2Mb_top-male-specific-genes_ExDMR.txt"))
 f = fread(paste0(dir, opt$f_ss_genes)); m = as.data.frame(m)
 m = fread(paste0(dir, opt$f_ss_genes)); f = as.data.frame(f)
 

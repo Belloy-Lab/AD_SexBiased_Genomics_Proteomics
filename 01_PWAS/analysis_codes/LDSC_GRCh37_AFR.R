@@ -1,58 +1,34 @@
-################################################################# Danielle Reid
-##################################################################### 05/28/24
-###create a LD ref panel for AFR-admixed ancestry from 1000G build 37
+suppressPackageStartupMessages({
+  library(optparse)
+  library(openxlsx)
+  library(data.table) 
+  library(dplyr)
+  library(tidyr)
+  library(ggplot2)
+  library(methods)
+})
 
-################################################################################ 
-## libraries
-
-library(openxlsx)
-library(data.table) 
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(methods)
-library(optparse)
-
-################################################################################
-option_list = list(
-  make_option("--PATH_plink1.9", action="store", default="plink1.9", type='character',
-              help="Path to plink1.9 executable [%default]"),
-  make_option("--PATH_plink2", action="store", default="plink2", type='character',
-              help="Path to plink2 executable [%default]")
+# ---- options ----
+option_list <- list(
+  make_option(c("-t", "--tDir"), type = "character", help = "Path to the phased 1000 Genomes reference panel (PSAM and PGEN files)", metavar = "character")
 )
 
-opt = parse_args(OptionParser(option_list=option_list))
+opt_parser <- OptionParser(option_list = option_list)
+opt <- parse_args(opt_parser)
 
-if ( system( paste(opt$PATH_plink1.9,"--help") , ignore.stdout=T,ignore.stderr=T ) != 0 ) {
-	cat( "ERROR: plink 1.9 could not be executed, set with --PATH_plink1.9\n" , sep='', file=stderr() )
-	q()
+if (is.null(opt$tDir)) {
+  stop("Please provide --tDir (top-level input directory).", call. = FALSE)
 }
 
-if ( system( paste(opt$PATH_plink2,"--help") , ignore.stdout=T,ignore.stderr=T ) != 0 ) {
-	cat( "ERROR: plink2 could not be executed, set with --PATH_plink2\n" , sep='', file=stderr() )
-	q()
-}
-
-################################################################################ 
-## Input
-
-# general inputs
-tDir <- "/storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/"
-
-# 1KG inputs 
-Fold_1000G <- "/storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/"
+# Input
+Fold_1000G <- opt$tDir
 Fil_1000G <- "1000g_AFR-admixed"
-
 # 1KG output folder
-tDir_1000G <- paste(tDir,"1KG_AFR-admixed/",sep="")
-
+tDir_1000G <- paste0(tDir, "1KG_AFR-admixed/")
 # genetic map file
-hg19map_fold <- "/storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/genetic_map_b37/"
+hg19map_fold <- paste0(tDir, "genetic_map_b37/") # recombination rate genetic map files per chr (gr37)
 
 ################################################################################ 
-# identify AFR-admixed subjects in 1KG
-
-# update fam file with ancestry
 dem_1000G <- read.table(paste(Fold_1000G,"phase3_corrected.psam",sep=""))
 dem_1000G <- dem_1000G[,c(2,1,5)]
 colnames(dem_1000G) <- c("SID","IID","sPOP")
@@ -63,12 +39,12 @@ dem_1000G <- dplyr::select(dem_1000G, -SID)
 write.table(dem_1000G,paste(tDir_1000G,"1K_AFR-admixed_IDs.txt",sep=""),
             row.names = F, col.names = F, quote = F
 )
-
 ################################################################################ 
 ## Extract AFR, EUR, and AMR subjects from 1KG
 
 # get subjects
-arg <- paste(opt$PATH_plink2, 
+plink2 <- "/usr/bin/plink2"
+arg <- paste(plink2, 
                  "--pgen", paste(Fold_1000G, "all_phase3.pgen", sep=""),
                  "--pvar", paste(Fold_1000G, "all_phase3.pvar", sep=""),
                  "--psam", paste(Fold_1000G,"phase3_corrected.psam",sep=""),
@@ -83,7 +59,8 @@ arg <- paste(opt$PATH_plink2,
 system(arg) 
 
 # update centimorgan map in bim file
-arg <- paste(opt$PATH_plink1.9, 
+plink19 <- "/usr/bin/plink1.9"
+arg <- paste(plink19, 
                  "--bfile", paste(tDir_1000G, Fil_1000G, sep=""),
                  "--allow-no-sex",
                  "--cm-map",paste(hg19map_fold,"genetic_map_chr@_combined_b37.txt",sep=""),
@@ -94,7 +71,7 @@ system(arg)
 
 #split the plink files by chr
 for (ch in 1:22) { 
-arg <- paste(opt$PATH_plink2, 
+arg <- paste(plink2, 
                  "--bfile", paste(tDir_1000G, Fil_1000G, "_cm", sep=""),
                  "--chr", ch,
                  "--make-bed --out", paste(tDir_1000G, Fil_1000G, "_cm_ch", ch, sep=""),

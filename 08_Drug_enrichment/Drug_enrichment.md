@@ -107,3 +107,6 @@ Rscript /storage1/fs1/belloy/Active/04_Code/$USER/Drug_enrichment/4_hormone_drug
     --node_out ppi_node_type_for_cytoscape.csv
 ```
 
+---
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).

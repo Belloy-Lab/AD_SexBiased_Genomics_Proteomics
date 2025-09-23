@@ -58,14 +58,6 @@ What this script does:
       (then unzips to .sumstats)
   Step 3 (R): Final cleanup of each .sumstats file in <out_dir>.
 
-Example:
-  CSF_PreCleanup_Master.sh \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_UKB_FinnGen_Females_case_control_reduced_bias.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS AD_Females_cc_rb.gen090.noAPOE.shared_var \
-    --Nsize_GWAS 636154 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/CSF
-
 Notes:
   - Input paths are resolved as: <in_dir>/<in_GWAS>
   - Outputs are written to: <out_dir>
@@ -106,28 +98,30 @@ timeit() {
 mkdir -p "$OUT_DIR"
 
 # GWAS summary stat sex-strat ref panel intersect.
-Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/LDintersect_CSF.R \
+Rscript PWAS/analysis_codes/LDintersect_CSF.R \
   --in_dir "${IN_DIR}/" \
   --gwas_file "$IN_GWAS" \
   --out_dir "${OUT_DIR}/" \
   --out_file "${OUT_GWAS}.CSFsexstrat.txt" \
-  --LD_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/ \
+  # NOTE: Update the LD dir path below.
+  --LD_dir PWAS/CST/sexstrat/LD/ \
   --LD_file chr1-22.txt
 
-Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/LDintersect_CSF.R \
+Rscript PWAS/analysis_codes/LDintersect_CSF.R \
   --in_dir "${IN_DIR}/" \
   --gwas_file "$IN_GWAS" \
   --out_dir "${OUT_DIR}/" \
   --out_file "${OUT_GWAS}.CSFnonsex.txt" \
-  --LD_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_LD_Reference_Files/ \
+  # NOTE: Update the LD dir path below.
+  --LD_dir PWAS/CST/non-sexstrat/LD/ \
   --LD_file chr1-22.txt
 
 
 # ==============================
 # STEP 2: Munge / clean summary stats (bash)
 # ==============================
-# LDSC path
-LDSC="/storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/ldsc"
+# NOTE: Update the LDSC path where LDSC tool installed
+LDSC="ldsc"
 cd "${LDSC}"
 
 # Activate conda env (load conda first if needed)
@@ -175,10 +169,10 @@ gzip -d "${OUT_GWAS}.CSFsexstrat.sumstats.gz" "${OUT_GWAS}.CSFnonsex.sumstats.gz
 # ==============================
 # STEP 3: Final R cleanup on munged
 # ==============================
-Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Post_mungestat_cleanup.R \
+Rscript PWAS/analysis_codes/Post_mungestat_cleanup.R \
     --file "${OUT_GWAS}.sexstrat.sumstats" \
     --dir "${OUT_DIR}"
 
-Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Post_mungestat_cleanup.R \
+Rscript PWAS/analysis_codes/Post_mungestat_cleanup.R \
     --file "${OUT_GWAS}.nonsex.sumstats" \
     --dir "${OUT_DIR}"

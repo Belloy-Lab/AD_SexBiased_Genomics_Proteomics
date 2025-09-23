@@ -65,15 +65,6 @@ What this script does:
 
   Step 3 (R): Final cleanup of the .sumstats file in <out_dir>.
 
-Example:
-  Brain_PreCleanup_wrapper.sh \
-    --in_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_GWAS_AD_november_update \
-    --in_GWAS ADGC_ADSP_UKB_FinnGen_Females_case_control_reduced_bias.gwama.clean.gen090.exclude_APOE_region.shared_var \
-    --out_GWAS AD_Females_cc_rb.gen090.noAPOE.shared_var \
-    --Nsize_GWAS 636154 \
-    --out_dir /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_all \
-	--pop EUR
-
 Notes:
   - Input is resolved as: <in_dir>/<in_GWAS>
   - Outputs are written to: <out_dir>
@@ -115,7 +106,7 @@ mkdir -p "$OUT_DIR"
 
 # GWAS summary stat overlift and EUR ref panel intersect.
 common_args=(
-  --ref_fold /storage1/fs1/belloy/Active/01_References/01_Files/Liftover/
+  --ref_fold PWAS/SupportingFiles/
   --chain hg38ToHg19.over.chain.gz
   --dir "${IN_DIR}/"
   --out_dir "${OUT_DIR}/"
@@ -127,15 +118,17 @@ common_args=(
 )
 
 if [[ "$POP" == "EUR" ]]; then
-  Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Liftover_intersect_Brain.R \
-    --ld_fold /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_EUR/ \
+  Rscript PWAS/analysis_codes/Liftover_intersect_Brain.R \
+  # NOTE: Update the 1KG_EUR path below.
+    --ld_fold 1000G_Grch37/1KG_EUR/ \  
     --snplist 1000g_EUR_cm.snplist \
     --ld_tab 1000g_EUR_cm.tab \
     "${common_args[@]}"
 
 elif [[ "$POP" == "AFR" ]]; then
-  Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Liftover_intersect_Brain.R \
-    --ld_fold /storage1/fs1/belloy/Active/02_Data/01_Incoming/1000G_Grch37/1KG_AFR-admixed/ \
+  Rscript PWAS/analysis_codes/Liftover_intersect_Brain.R \
+  # NOTE: Update the 1KG_AFR path below.
+    --ld_fold 1000G_Grch37/1KG_AFR-admixed/ \
     --snplist 1000g_AFR-admixed_cm.snplist \
     --ld_tab 1000g_AFR-admixed_cm.tab \
     "${common_args[@]}"
@@ -148,8 +141,8 @@ fi
 # ==============================
 # STEP 2: Munge / clean summary stats (bash)
 # ==============================
-# LDSC path
-LDSC="/storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/ldsc"
+# NOTE: Update the LDSC path where LDSC tool installed
+LDSC="ldsc"
 cd "${LDSC}"
 
 # Activate conda env (load conda first if needed)
@@ -186,6 +179,6 @@ gzip -d "${OUT_GWAS}.hg19_intersected.sumstats.gz"
 # ==============================
 # STEP 3: Final R cleanup on munged
 # ==============================
-Rscript /storage2/fs1/belloy2/Active/04_Code/sivas/PWAS/Post_mungestat_cleanup.R \
+Rscript PWAS/analysis_codes/Post_mungestat_cleanup.R \
     --file "${OUT_GWAS}.hg19_intersected.sumstats" \
     --dir "${OUT_DIR}"

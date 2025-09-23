@@ -148,7 +148,7 @@ do_assoc() {
     echo "[SKIP] $(basename "$outfile")"
     return 0
   fi
-  Rscript /storage1/fs1/belloy/Active/01_References/02_Commands_and_Tutorials/fusion_twas-master/FUSION.assoc_test.R \
+  Rscript PWAS/analysis_codes/FUSION.assoc_test.R \
     --sumstats    "$sumstats" \
     --weights     "${wdir}/${wfile}" \
     --weights_dir "${wdir}" \

@@ -66,18 +66,19 @@ tail -n +2 "${CSV_FILE}" | while IFS=',' read -r cohort ss_dir ssx ssn sex out_d
     -G compute-belloy-t1
     -sla compute-belloy-t1
     -a docker(dmr07083/fusion-project:4.3.2)
-    bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash
+    # NOTE: Update the script path below if the location changes
+    bash PWAS/analysis_codes/CSF_PWAS.bash
       --ss_dir "${ss_dir}"
       --ssx "${ssx}"
       --ssn "${ssn}"
       --ss_sex "${sex}"
-      --pw_m_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt
-      --pw_m NGI_CSF_male_cis_weights.pos
-      --pw_f_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/pwas_cis_wgt
-      --pw_f NGI_CSF_female_cis_weights.pos
-      --pw_b_dir /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/PWAS_Weights/
-      --pw_b NGI_CSF_cis-weights.pos
-      --ref_ld_chr /storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_sex-stratified_pQTL_files/LD/LD/CSF_proteomics_3107_samples_maf_0032_geno_1_chr_
+      --pw_m_dir PWAS/CSF_PW/Male # <-- FIX the male brin protein weights path
+      --pw_m NGI_CSF_male_cis_weights.pos # <-- fix the file name
+      --pw_f_dir PWAS/CSF_PW/Female # <-- FIX the male brin protein weights path
+      --pw_f NGI_CSF_female_cis_weights.pos # <-- fix the file name
+      --pw_b_dir PWAS/CSF_PW/Joint # <-- FIX the male brin protein weights path
+      --pw_b NGI_CSF_cis-weights.pos # <-- fix the file name
+      --ref_ld_chr /Path/to/CSF/LD/file_name_by_chr(1-22) # <-- FIX 1000G LD ref panel path
       --out_dir "${out_dir}"
       --out_file "${out_file}"
   )

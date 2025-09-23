@@ -16,4 +16,8 @@ This repo contains analysis methods and R scripts for performing Variant Effect 
 #### Post-processing (R script)
 - Reads the VEP output (`.txt` format).  
 - Cleans and summarizes annotations.  
-- Produces the final tables and figures.  
+- Produces the final tables and figures. 
+
+---
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).

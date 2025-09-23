@@ -46,7 +46,7 @@ drug_enrich_res_expanded <- drug_enrich_res %>%
   select(ID,geneID)
 
 # Read in PPI related genes from step 1
-related_gene <- fread(file.path(opt$work_dir, "network", opt$ppi_df_female)
+related_gene <- fread(file.path(opt$work_dir, "network", opt$ppi_df_female))
 related_gene <- select(related_gene,g1.name,g2.name)
 filtered_related_gene <- related_gene %>%
   filter(g2.name %in% drug_enrich_res_expanded$geneID)

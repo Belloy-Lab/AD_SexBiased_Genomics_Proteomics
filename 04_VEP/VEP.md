@@ -87,5 +87,6 @@ Matrix shows VEP-annotated variant consequences for top GWAS and PWAS loci. Colu
 
 ![**Figure 2.**:Plot](Results/Fig2.png)
 
-
-__END__
+---
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).

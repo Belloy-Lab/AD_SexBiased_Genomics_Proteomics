@@ -93,3 +93,7 @@ bsub -J cell_step2 -G compute-belloy-t1 -q general -n 1 -M 16000 -R "rusage[mem=
 ```
 
 ![**Figure.**:Bar plot](results/cell-type_enrichment_barplot_Filtered.jpg)
+
+---
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).

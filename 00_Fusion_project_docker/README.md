@@ -43,4 +43,5 @@ docker run -it -v /your/data:/data fusion-project:4.3.2 bash
 docker run -it -v /your/local/path:/data belloylab/fusion-project:4.3.2 bash
 ```
 
-__END__
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).

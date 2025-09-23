@@ -66,28 +66,26 @@ The input parameters for brain analyses are listed in Brain_PWAS_input.csv.
 
 Dry-run first:
 ```bash
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_PWAS_master.bash Brain_PWAS_input.csv --dry-run
+bash PWAS/analysis_codes/Brain_PWAS_master.bash PWAS/Input_CSV/Brain_PWAS_input.csv --dry-run
 ```
 
 Submit for real:
 ```bash
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_PWAS_master.bash Brain_PWAS_input.csv
+bash PWAS/analysis_codes/Brain_PWAS_master.bash PWAS/Input_CSV/Brain_PWAS_input.csv
 ```
 
 ### CSF Proteogenomics analysis
 The input parameters for CSF analyses are listed in CSF_PWAS_input.csv.
 
 ```bash
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PWAS_master.bash CSF_PWAS_input.csv --dry-run
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PWAS_master.bash CSF_PWAS_input.csv
+bash PWAS/analysis_codes/CSF_PWAS_master.bash PWAS/Input_CSV/CSF_PWAS_input.csv
 ```
 
 ### CSF HP weights analysis
 The same input parameters file CSF_PWAS_input.csv culd be used to HP analysis.
 
 ```bash
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PWAS_master_HP.bash CSF_PWAS_input.csv --dry-run
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PWAS_master_HP.bash CSF_PWAS_input.csv
+bash PWAS/analysis_codes/CSF_PWAS_master_HP.bash PWAS/Input_CSV/CSF_PWAS_input.csv
 ```
 
 
@@ -100,6 +98,6 @@ Each analysis generates the following key outputs (naming depends on --out_GWAS 
 - PWAS association results:
   - <out_dir>/<tissue>/<sex>/*.chr.dat
 
-## License (MIT)
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).
 
-Copyright (c) 2025 Sathesh K. Sivasankaran

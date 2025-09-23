@@ -143,3 +143,7 @@ bsub -J OL_PSEN1 -G compute-belloy-t1 -q general -n 1 -M 100000 -R "rusage[mem=1
   Rscript /storage2/fs1/belloy2/Active/04_Codes/sivas/LocusZoom/overlay_plot_PSEN1.r
 ```
 ![**Figure 1.**: Locus Zoom plot ARSA. ](figures/2_ARSA.png)
+
+---
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).

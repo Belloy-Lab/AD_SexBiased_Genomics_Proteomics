@@ -12,18 +12,9 @@ The directory structure includes:
 - Dedicated folders for scripts used across different datasets
 
 ### Set Working Directory
-Navigate to your project directory (choose the appropriate path based on your system). Please replace '$USER' with your actual username or preferred folder name.
+Navigate to your project directory (choose the appropriate path based on your system).
 
 ```bash
-cd /storage1/fs1/belloy/Active/05_Projects/$USER/
-mkdir -p PWAS
-mkdir -p PWAS/EU_all/logs
-mkdir -p PWAS/EU_noUKB/logs
-mkdir -p PWAS/AFR/logs
-
-# OR
-
-cd /storage2/fs1/belloy2/Active/05_Projects/$USER/
 mkdir -p PWAS
 mkdir -p PWAS/EU_all/logs
 mkdir -p PWAS/EU_noUKB/logs
@@ -31,27 +22,19 @@ mkdir -p PWAS/AFR/logs
 ```
 
 ### Folder for PWAS figures and tables
-Please create a separate folder to create supporting and final figures and tables. 
+Please create a separate folder to create figures and tables. 
 ```bash
-mkdir -p Figure_Tables/logs
+mkdir -p PWAS/Figure_Tables/logs
 ```
 
 ### Set Up Code Directory
-Navigate to 04_Code directory and create folder for PWAS project scripts. Please replace '$USER' with your actual username or preferred folder name. Also, make sure to set the correct path in all R and Bash scripts located in the analysis_codes directory.
+Please make sure to set the correct path in all R and Bash scripts located in the analysis_codes directory.
 
 ```bash
-cd /storage1/fs1/belloy/Active/04_Code/$USER/
-mkdir PWAS
-cd PWAS
-
-# OR
-
-cd /storage2/fs1/belloy2/Active/04_Code/$USER/
-mkdir PWAS
-cd PWAS
+mkdir -p PWAS/analysis_codes
 ```
 
-Please copy all scripts from the analysis_codes directory into their corresponding target folders. After copying, submit the scripts for execution. Please ensure that '$USER' is replaced with your preferred directory name in all R and Bash scripts to ensure proper execution.
+Please copy all scripts from the analysis_codes directory into their corresponding target folders.
 
 ### You're All Set
 After running the above commands, you’ll have a clean, organized folder layout ready for:  
@@ -61,6 +44,5 @@ After running the above commands, you’ll have a clean, organized folder layout
 - Project-specific scripts  
 This structure ensures reproducibility, clarity, and ease of collaboration across datasets and analysis stages.
 
-## License (MIT)
-
-Copyright (c) 2025 Sathesh K. Sivasankaran
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).

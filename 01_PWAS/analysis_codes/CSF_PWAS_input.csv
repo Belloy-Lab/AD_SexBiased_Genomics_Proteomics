@@ -1,7 +1,0 @@
-cohort,ss_dir,ssx,ssn,sex,out_dir,out_file
-EU_all,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all,EUall.cleaned.male.CSF.sexstrat.sumstats,EUall.cleaned.male.CSF.nonsex.sumstats,male,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all,EUall.cleaned.CSF.male
-EU_all,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all,EUall.cleaned.female.CSF.sexstrat.sumstats,EUall.cleaned.female.CSF.nonsex.sumstats,female,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all,EUall.cleaned.CSF.female
-EU_noUKB,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB,EUnoUKB.cleaned.male.CSF.sexstrat.sumstats,EUnoUKB.cleaned.male.CSF.nonsex.sumstats,male,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB,EUnoUKB.cleaned.CSF.male
-EU_noUKB,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB,EUnoUKB.cleaned.female.CSF.sexstrat.sumstats,EUnoUKB.cleaned.female.CSF.nonsex.sumstats,female,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_noUKB,EUnoUKB.cleaned.CSF.female
-AFR,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR,AFR.cleaned.male.CSF.sexstrat.sumstats,AFR.cleaned.male.CSF.nonsex.sumstats,male,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR,AFR.cleaned.CSF.male
-AFR,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR,AFR.cleaned.female.CSF.sexstrat.sumstats,AFR.cleaned.female.CSF.nonsex.sumstats,female,/storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR,AFR.cleaned.CSF.female

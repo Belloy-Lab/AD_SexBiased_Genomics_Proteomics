@@ -6,6 +6,7 @@ library(tidyverse)
 library(patchwork)
 library(extrafont)
 library(optparse)
+
 option_list <- list(
   make_option("--work_dir", type = "character", help = "Working directory"),
   make_option("--results_in", type = "character", help = "Input enrichment results CSV"),

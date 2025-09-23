@@ -30,7 +30,7 @@ export LSF_DOCKER_ENTRYPOINT=/bin/bash
 Use the fusion-project Docker image to test commands interactively (optional).
 
 ```bash
-bsub -Is -G compute-belloy-t1 -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -a 'docker(dmr07083/fusion-project:4.3.2)' /bin/bash
+bsub -Is -q subscription -R 'rusage[mem=40GB] span[hosts=1]' -a 'docker(dmr07083/fusion-project:4.3.2)' /bin/bash
 ```
 > **Note:** LSF memory syntax can vary by site; `mem=40GB` is accepted on our cluster. If not, convert to MB (e.g., `mem=40960`).
 
@@ -51,25 +51,13 @@ The brain proteome weights are in hg19 (GRCh37). GWAS sumstats (initially in hg3
 ### EUR LD reference panel
 
 ```bash
-bsub -g /$USER/compute-belloy -J EURLD -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/EUR1KGP_GR37.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/EU_all/logs/EUR1KGP_GR37.%J.err \
-  -q subscription -R 'rusage[mem=32GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  Rscript /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/EU_all/LDSC_GRCh37_EUR.R
+  Rscript PWAS/analysis_codes/LDSC_GRCh37_EUR.R --tDir /Path/to/the/1000/Genomes/reference
 ```
 
 ### AFR-admixed LD reference panel
 
 ```bash
-bsub -g /$USER/compute-belloy -J AFRLDpanel -n 1 -N \
-  -o /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/AFR-ad_LD_ref_panel.%J.out \
-  -e /storage2/fs1/belloy2/Active/05_Projects/$USER/PWAS/AFR/logs/AFR-ad_LD_ref_panel.%J.err \
-  -q subscription -R 'rusage[mem=30GB] span[hosts=1]' -G compute-belloy-t1 -sla compute-belloy-t1 \
-  -a 'docker(dmr07083/fusion-project:4.3.2)' \
-  Rscript /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/AFR/LDSC_GRCh37_AFR.R \
-      --PATH_plink1.9 /usr/bin/plink1.9 \
-      --PATH_plink2 /usr/bin/plink2
+Rscript PWAS/analysis_codes/LDSC_GRCh37_AFR.R --tDir /Path/to/the/1000/Genomes/reference
 ```
 
 ### Example input formats
@@ -104,12 +92,12 @@ The input parameters for brain analyses are listed in Brain_PreCleanup_input.csv
 
 Dry-run first:
 ```bash
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_PreCleanup_master.bash Brain_PreCleanup_input.csv --dry-run
+bash PWAS/analysis_codes/Brain_PreCleanup_master.bash PWAS/InputCSV/Brain_PreCleanup_input.csv --dry-run
 ```
 
 Submit for real:
 ```bash
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/Brain_PreCleanup_master.bash Brain_PreCleanup_input.csv
+bash PWAS/analysis_codes/Brain_PreCleanup_master.bash PWAS/InputCSV/Brain_PreCleanup_input.csv
 ```
 ---
 
@@ -129,8 +117,7 @@ After intersection, sumstats are cleaned with `munge_sumstats.py` and filtered t
 The input parameters for CSF analyses are listed in CSF_PreCleanup_input.csv.
 
 ```bash
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PreCleanup_master.bash CSF_PreCleanup_input.csv --dry-run
-bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PreCleanup_master.bash CSF_PreCleanup_input.csv
+bash PWAS/analysis_codes/CSF_PreCleanup_master.bash PWAS/InputCSV/CSF_PreCleanup_input.csv
 ```
 
 ---
@@ -158,7 +145,7 @@ bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_PreCleanup_master.bash 
 
 ---
 
-## License (MIT)
+**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
+**License:** MIT (see [main repository README](../README.md) for full text).
 
-Copyright (c) 2025 Sathesh K. Sivasankaran
 
