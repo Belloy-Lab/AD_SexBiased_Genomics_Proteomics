@@ -2,12 +2,10 @@
 
 ## Project Directory Structure for Analysis
 
-This project involves GWAS summary statistics from multiple datasets, including **ADSP**, **ADGC**, **UK Biobank**, and **FinnGen**. To streamline analysis and keep outputs organized, we define a structured folder hierarchy for each analysis scenario.
-
-The directory structure includes:
-- EU_all-analysis (all datasets combined)
-- EU_noUKB-analysis excluding UK Biobank from the EU_all
-- Analysis focused on African-admixed (AFR) datasets
+This project involves GWAS summary statistics from multiple datasets, including **ADSP**, **ADGC**, **UK Biobank**, and **FinnGen**. We define a structured folder hierarchy for each analysis scenario:
+- EU_all-analysis (all European datasets combined)
+- EU_noUKB-analysis (excluding UK Biobank from EU_all)
+- AFR-analysis (all African-admixed datasets combined)
 - Sex-stratified and non-stratified results
 - Dedicated folders for scripts used across different datasets
 
@@ -44,5 +42,5 @@ After running the above commands, you’ll have a clean, organized folder layout
 - Project-specific scripts  
 This structure ensures reproducibility, clarity, and ease of collaboration across datasets and analysis stages.
 
-**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
-**License:** MIT (see [main repository README](../README.md) for full text).
+**Citation:** see [main repository README](../README.md) 
+**License:** see [main repository README](../README.md)
