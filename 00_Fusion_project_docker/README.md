@@ -1,6 +1,6 @@
 # 🧬 FUSION Project Docker Image (v4.3.2)
 
-This Docker image provides a pre-configured environment for running the [FUSION TWAS](http://gusevlab.org/projects/fusion/) pipeline and related post-GWAS analysis tools.
+This Docker image provides a pre-configured environment for running the [FUSION](http://gusevlab.org/projects/fusion/) pipeline and other downstream analyses provided in this repository.
 
 It includes:
 - R 4.4 with key CRAN + Bioconductor packages
