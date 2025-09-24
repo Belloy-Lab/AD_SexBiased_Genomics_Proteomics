@@ -1,4 +1,4 @@
-**AD sex-biased Genomics & Proteomics**
+**Sex Strat AD PWAS**
 
 ## Project Directory Structure for Analysis
 
