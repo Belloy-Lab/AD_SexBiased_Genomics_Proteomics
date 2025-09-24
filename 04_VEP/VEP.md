@@ -25,7 +25,6 @@ bsub -Is -G compute-belloy-t1 -q subscription -R 'rusage[mem=40GB]' -a 'docker(d
 Navigate to your project directory (choose the appropriate path based on your system). Please replace '$USER' with your actual username or preferred folder name. Also, make sure to replace '$USER' with your actual username or preferred folder name in all R and Bash scripts located in the analysis_codes directory.
 
 ```bash
-cd /storage2/fs1/belloy2/Active/05_Projects/$USER/
 mkdir -p VEP/logs
 mkdir -p VEP/Results
 mkdir -p VEP/Variants_list
