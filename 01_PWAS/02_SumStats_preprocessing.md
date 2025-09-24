@@ -1,5 +1,3 @@
-**AD Sex-Biased Genomics & Proteomics**
-
 ## Sumstats Pre-Processing Overview
 
 This repository documents the pre-processing of sex-stratified GWAS summary statistics for PWAS using brain and CSF proteogenomic datasets.
@@ -7,7 +5,7 @@ This repository documents the pre-processing of sex-stratified GWAS summary stat
 Pipelines include:
 - Genome build harmonization (hg38 → hg19 liftover when required)
 - LD reference panel intersection
-- Standardization/cleaning with LDSC for PWAS compatibility
+- Standardization/cleaning with LDSC mungestats for PWAS compatibility
 
 ---
 
