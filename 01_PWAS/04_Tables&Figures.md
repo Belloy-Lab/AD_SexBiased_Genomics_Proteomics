@@ -13,8 +13,7 @@ export LSF_DOCKER_ENTRYPOINT=/bin/bash
 ```
 
 ## Tables
-### EUR AD PWAS sex-specific hits and correspnding AD PWAS results across the EU_all analyses by sex
-Sex-specific AD PWAS results for the sex-specific genes identified in the principal European sex-specific AD PWAS including the UKB cohort and corresponding findings from the European sensitivity AD PWAS. Findings were considered consistent in sensitivity analyses if the discovery sex maintained P<0.05 and the opposite sex maintained P>0.05. The most significant findings across primary and secondary discoveries are reported when applicable.
+### EUR AD PWAS sex-specific results across the EU_all analyses by sex
 
 ```bash
 Rscript PWAS/analysis_codes/Fgiures_Tables/TableS18.R \
@@ -33,7 +32,7 @@ Rscript PWAS/analysis_codes/Fgiures_Tables/TableS18.R \
 
 
 ### EUR AD PWAS sex-specific hits, and corresponding AFR PWAS of AD findings and cross-ancestry consistency results
-Sex-specific AD PWAS results for the sex-specific genes identified in the principal European sex-specific AD PWAS, and corresponding findings in the sex-stratified AFR AD PWAS and the combined sample-size weighted results. Observations of sex heterogeneity concistency are indicated. EUR findings were considered consistent in African ancestry analyses if the P-value in the discovery sex improved after meta-analyzing the EUR and AFR findings, while the opposite sex maintained P>0.05. The most significant findings across the primary and secondary discoveries are reported when applicable.
+
 ```bash
 Rscript PWAS/analysis_codes/Fgiures_Tables/TableS23.R \
         --dir PWAS/Figures_Tables/ \
@@ -77,5 +76,5 @@ Rscript PWAS/analysis_codes?Fogures_Tables/CircosPlot_Figure2B.R \
   </tr>
 </table>
 
-**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
-**License:** MIT (see [main repository README](../README.md) for full text).
+**Citation:** see [main repository README](../README.md) 
+**License:** see [main repository README](../README.md)
