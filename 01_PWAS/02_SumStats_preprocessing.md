@@ -128,7 +128,7 @@ bash PWAS/analysis_codes/CSF_PreCleanup_master.bash PWAS/InputCSV/CSF_PreCleanup
 
 - **Confirm LD panel selection**  
   Each wrapper script hard-codes LD panel paths. Double-check that:  
-  - Brain analyses point to the correct 1KGP (EUR or AFR-admixed) reference.  
+  - Brain analyses point to the correct 1000genomes (EUR or AFR-admixed) reference.  
   - CSF analyses point to the correct sex-stratified or combined LD reference files.  
 
 - **Genome build consistency**  
