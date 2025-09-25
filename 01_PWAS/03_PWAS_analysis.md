@@ -22,16 +22,16 @@ bsub -Is -G compute-belloy-t1 -q subscription -R 'rusage[mem=150GB] span[hosts=1
 
 ## PWAS Analysis Overview
 
-We performed sex-stratified protein-wide association studies (PWAS) using FUSION (http://gusevlab.org/projects/fusion/). Alzheimer’s disease (AD) GWAS (male, and female) were paired with proteogenomic prediction models (male. female and combined) from brain and CSF to test whether genetically predicted protein abundance is associated with AD in a sex-specific manner—supporting a causal role.
+We performed sex-stratified protein-wide association studies (PWAS) using FUSION (http://gusevlab.org/projects/fusion/). AD GWAS (male and female) were paired with proteogenomic prediction models (male, female, and combined) from brain and CSF.
 
 - Primary (sex-matched) analysis
-    - Male GWAS × male protein weights, and female GWAS × female protein weights (brain or CSF). These constitute the main PWAS discoveries.
+    - Male GWAS × male protein weights; female GWAS × female protein weights.
 
 - Secondary (non-sex-matched) analysis
-    - Male or female GWAS × combined (male+female) protein weights. Used to assess robustness when sex-specific proteomic models are not available.
+    - Male GWAS × combined (male+female) protein weights; female GWAS × combined (male+female) protein weights. 
 
 - Opposite-sex (cross-sex) analysis
-    - Male GWAS × female protein weights, and female GWAS × male protein weights. Used as a sensitivity check for sex effects.
+    - Male GWAS × female protein weights; female GWAS × male protein weights. Used as only to create sex specificity filters.
 
 
 ### Input file formats
@@ -82,7 +82,7 @@ bash PWAS/analysis_codes/CSF_PWAS_master.bash PWAS/Input_CSV/CSF_PWAS_input.csv
 ```
 
 ### CSF HP weights analysis
-The same input parameters file CSF_PWAS_input.csv culd be used to HP analysis.
+The same input parameters file CSF_PWAS_input.csv is used to HP analysis.
 
 ```bash
 bash PWAS/analysis_codes/CSF_PWAS_master_HP.bash PWAS/Input_CSV/CSF_PWAS_input.csv
@@ -99,5 +99,5 @@ Each analysis generates the following key outputs (naming depends on --out_GWAS 
   - <out_dir>/<tissue>/<sex>/*.chr.dat
 
 **Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
-**License:** MIT (see [main repository README](../README.md) for full text).
+**License:** see [main repository README](../README.md)
 
