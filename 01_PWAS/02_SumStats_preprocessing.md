@@ -41,7 +41,7 @@ The brain proteome weights are in hg19 (GRCh37). GWAS sumstats (initially in hg3
   - Chain file: [hg38ToHg19.over.chain.gz](https://hgdownload.cse.ucsc.edu/goldenpath/hg38/liftOver/hg38ToHg19.over.chain.gz).
 
 - Intersected with ancestry-specific LD reference panels
-  - LD reference: 1KGP EUR (for EU cohorts) or AFR-admixed (for AFR cohorts)
+  - LD reference: 1000Genomes EUR (for EUR cohorts) or EUR/AFR/AMR (for admixed AFR cohorts)
 
 - Cleaned with with LDSC’s `munge_sumstats.py`.
   - Cleaning: LDSC standardizes headers and removes SNPs with missing or invalid fields
