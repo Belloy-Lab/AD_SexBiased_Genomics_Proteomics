@@ -10,7 +10,7 @@ This project involves GWAS summary statistics from multiple datasets, including 
 - Dedicated folders for scripts used across different datasets
 
 ### Set Working Directory
-Navigate to your project directory (choose the appropriate path based on your system).
+Navigate to your project directory.
 
 ```bash
 mkdir -p PWAS
@@ -20,19 +20,19 @@ mkdir -p PWAS/AFR/logs
 ```
 
 ### Folder for PWAS figures and tables
-Please create a separate folder to create figures and tables. 
+Create a separate folder to create figures and tables. 
 ```bash
 mkdir -p PWAS/Figure_Tables/logs
 ```
 
 ### Set Up Code Directory
-Please make sure to set the correct path in all R and Bash scripts located in the analysis_codes directory.
+Set correct path in all R and Bash scripts located in the analysis_codes directory.
 
 ```bash
 mkdir -p PWAS/analysis_codes
 ```
 
-Please copy all scripts from the analysis_codes directory into their corresponding target folders.
+Copy all scripts from the analysis_codes directory into their corresponding target folders.
 
 ### You're All Set
 After running the above commands, you’ll have a clean, organized folder layout ready for:  
@@ -40,7 +40,6 @@ After running the above commands, you’ll have a clean, organized folder layout
 - Intermediate outputs  
 - Final results  
 - Project-specific scripts  
-This structure ensures reproducibility, clarity, and ease of collaboration across datasets and analysis stages.
 
 **Citation:** see [main repository README](../README.md) 
 **License:** see [main repository README](../README.md)
