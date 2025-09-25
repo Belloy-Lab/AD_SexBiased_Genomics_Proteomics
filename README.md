@@ -12,7 +12,6 @@ Brain and CSF PWAS weights were derived from following references:
  1. Wingo, A. P. et al. Sex differences in brain protein expression and disease. Nat Med 29, 2224–2232 (2023).
  2. Western, D. et al. Proteogenomic analysis of human cerebrospinal fluid identifies neurologically relevant regulation and implicates causal proteins for Alzheimer’s disease. Nat Genet 56, 2672–2684 (2024).  
 
-You can download the proteogenomic data from the following links:  
 | Tissue | Download Link                                          |
 |--------|--------------------------------------------------------|
 | Brain  | https://doi.org/10.7303/syn51150434                    |
