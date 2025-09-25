@@ -16,12 +16,8 @@ option_list <- list(
   make_option("--FDA_gmt", type = "character", help = "FDA GMT file"),
   make_option("--male_list", type = "character", help = "Male drug enrichment XLSX"),
   make_option("--female_list", type = "character", help = "Female drug enrichment XLSX"),
-  make_option("--female_filter1", type = "character", help = "Female filter1 output CSV"),
-  make_option("--male_filter1", type = "character", help = "Male filter1 output CSV"),
-  make_option("--female_filter2", type = "character", help = "Female filter2 output CSV"),
-  make_option("--male_filter2", type = "character", help = "Male filter2 output CSV"),
-  make_option("--female_filter3", type = "character", help = "Female filter3 output CSV"),
-  make_option("--male_filter3", type = "character", help = "Male filter3 output CSV")
+  make_option("--female_out", type = "character", help = "Female filtered output CSV"),
+  make_option("--male_out", type = "character", help = "Male filtered output CSV"),
 )
 opt <- parse_args(OptionParser(option_list = option_list))
 if (is.null(opt$work_dir)) stop("--work_dir is required")
@@ -41,14 +37,11 @@ f1 = read_excel(file.path(opt$work_dir, "results", opt$female_list)) %>%
 m1 = read_excel(file.path(opt$work_dir, "results", opt$male_list)) %>%
        mutate(Sex = 'Male',   GeneRatio_num = convert_gene_ratio(GeneRatio))
 
-
 ###############################################################################################################################################################
 # Read in FDA approaved GMT file
 gmt_df_FDA <- read.gmt(file.path(opt$work_dir, opt$FDA_gmt))
 gmt_df_FDA = as.data.frame(gmt_df_FDA) %>% 
   distinct(term)
-
-
 ## Filter lists to only include FDA approved drugs
 # Female
 f1_FDA = f1 %>% 
@@ -57,25 +50,6 @@ f1_FDA = f1 %>%
 # Male
 m1_FDA = m1 %>% 
   filter(ID %in% gmt_df_FDA$term)
-
-
-###############################################################################################################################################################
-## Filter 1: FDA approved & p.adjust < 0.05
-
-# Female
-f1_FDA_filter1 = f1_FDA %>% 
-  filter(p.adjust < 0.05) %>% 
-  dplyr::select(-Sex, -GeneRatio_num)
-
-# Male
-m1_FDA_filter1 = m1_FDA %>% 
-  filter(p.adjust < 0.05) %>% 
-  dplyr::select(-Sex, -GeneRatio_num)
-
-
-fwrite(f1_FDA_filter1, file.path(opt$work_dir, "results", opt$female_filter1))
-fwrite(m1_FDA_filter1, file.path(opt$work_dir, "results", opt$male_filter1))
-
 
 ###############################################################################################################################################################
 ## Filter 2: FDA approved & p.adjust < 0.05 & GeneRatio Sex1 > 1.5 * GeneRatio Sex2
@@ -87,7 +61,6 @@ f1_FDA_filter2 <- f1_FDA %>%
   filter(is.na(GeneRatio_m) | GeneRatio_num >= 1.5 * GeneRatio_m) %>%
   select(-GeneRatio_m)
 
-
 # Male
 m1_FDA_filter2 <- m1_FDA %>%
   filter(p.adjust < 0.05) %>%
@@ -96,33 +69,8 @@ m1_FDA_filter2 <- m1_FDA %>%
   select(-GeneRatio_f)
 
 
-fwrite(f1_FDA_filter2, file.path(opt$work_dir, "results", opt$female_filter2))
-fwrite(m1_FDA_filter2, file.path(opt$work_dir, "results", opt$male_filter2))
-
-
-###############################################################################################################################################################
-## Filter 3: Unique Approach: Filter f1 - Significant in females and not present in m1
-
-# Female
-f1_FDA_filter3 <- f1_FDA_filter2 %>%
-  filter(!ID %in% m1_FDA$ID) %>%
-  dplyr::select(-GeneRatio_num, -Sex) %>% # Remove temporary columns
-  arrange(p.adjust)
-
-
-
-# Approach 2: Filter m1 - Significant in males and not present in f1
-m1_FDA_filter3 <- m1_FDA_filter2 %>%
-  filter(!ID %in% f1_FDA$ID) %>%
-  dplyr::select(-GeneRatio_num, -Sex) %>% # Remove temporary columns
-  arrange(p.adjust)
-
-
-fwrite(f1_FDA_filter3, file.path(opt$work_dir, "results", opt$female_filter3))
-fwrite(m1_FDA_filter3, file.path(opt$work_dir, "results", opt$male_filter3))
-
-# End of script
-## Next reference "4_hormone_drug_network.R" to get networks of drugs and genes for hormone specific investigation.
+fwrite(f1_FDA_filter2, file.path(opt$work_dir, "results", opt$female_out))
+fwrite(m1_FDA_filter2, file.path(opt$work_dir, "results", opt$male_out))
 
 sessionInfo()
 # R version 4.4.2 (2024-10-31)

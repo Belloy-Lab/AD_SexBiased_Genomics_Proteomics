@@ -15,8 +15,8 @@ It includes:
 To build this image yourself:
 
 ```bash
-git clone https://github.com/Belloy-Lab/Sex_Strat_AD_GWAS_PWAS/fusion_project_docker
-cd Sex_Strat_AD_GWAS_PWAS/fusion_project_docker
+git clone https://github.com/Belloy-Lab/AD_SexBiased_Genomics_Proteomics/00_Fusion_project_docker
+cd AD_SexBiased_Genomics_Proteomics/00_Fusion_project_docker
 docker build -t fusion-project:4.3.2 .
 ```
 ## Pull Pre-Built Image

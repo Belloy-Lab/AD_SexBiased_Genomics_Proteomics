@@ -1,5 +1,3 @@
-## Expanded Gene List Drug Enrichment Analysis - August 28, 2025
-
 # Load Libraries
 rm(list=ls())
 library(clusterProfiler)
@@ -7,17 +5,12 @@ library(dplyr)
 library(tidyr)
 library(data.table)
 library(stringr)
-library(HGNChelper) # this package is missing in fusion docker
-library(epigraphdb) # this package is missing in fusion docker
-
-# Set WD
-setwd("/storage2/fs1/belloy2/Active/05_Projects/sivas/Drug_enrichment")
-
+library(HGNChelper) 
+library(epigraphdb)
 
 option_list <- list(
   make_option("--work_dir", type = "character", help = "Working directory"),
-  make_option("--male_list", type = "character", help = "Path to male gene list file"),
-  make_option("--female_list", type = "character", help = "Path to female gene list file"),
+  make_option("--input_gene_list", type = "character", help = "GWAS PWAS male and femal final gene list (csv)"),
   make_option("--male_out", type = "character", help = "Male expanded output file (tsv)"),
   make_option("--female_out", type = "character", help = "Female expanded output file (tsv)")
 )
@@ -26,12 +19,15 @@ if (is.null(opt$work_dir)) stop("--work_dir is required")
 dir.create(opt$work_dir, showWarnings = FALSE, recursive = TRUE)
 setwd(opt$work_dir)
 
-
-##################################################################################################################
 ## Male
-###############################################################################################################################
 # Read in Male gene list (filtered 2 gene list = Genes with priority score 1 + MAPT [lit support])
-gene_male <- read.table(file.path(opt$work_dir, "gene_lists", opt$male_list), header = TRUE)
+gene_male <- read.table(file.path(opt$work_dir, opt$input_gene_list), header = TRUE)
+
+# Fitler gene list to male genes with score 1
+gene_male = gene_list %>% 
+  filter(ad_sample == "Male",
+         score == "1" | score == "1*") %>% 
+  dplyr::select(gene_name)
 
 # Check Gene Symbols
 check_gene_male <- checkGeneSymbols(
@@ -44,7 +40,6 @@ check_gene_male <- checkGeneSymbols(
 )
 # All FALSE genes had NA for SUggested Symbol -- No changes needed
 colnames(gene_male) <- "hgnc_names"
-
 
 # druggable tiers file (same as the package)
 druggable_tiers <- readxl::read_excel("aag1166_Table S1.xlsx")
@@ -69,7 +64,6 @@ druggable_tiers2 <- inner_join(druggable_tiers,check_gene_dt,by='hgnc_names') %>
   drop_na(Suggested.Symbol) %>%
   dplyr::select(Suggested.Symbol, druggability_tier) %>% 
   dplyr::rename(hgnc_names = Suggested.Symbol)
-
 
 # find druggable info for raw gene list
 candidate_gene_tiers <- data.frame(hgnc_names=gene_male$hgnc_names)
@@ -89,7 +83,6 @@ for (i in 1:length(gene_male$hgnc_names)) {
 
 ppi_df_all$disease_related <- NA  # Create a new empty column
 
-
 # Loop through each interacting gene in g2.name
 for (i in seq_len(nrow(ppi_df_all))) {
   gene <- ppi_df_all$g2.name[i]
@@ -113,7 +106,6 @@ res_filter = res %>%
   dplyr::select(`g2.name`) %>% 
   dplyr::rename(hgnc_names = `g2.name`) 
 
-
 # Add expanded genes to raw gene list - get unique gene_names
 m_full = rbind(gene_male, res_filter) %>% 
   distinct(hgnc_names) %>% 
@@ -122,16 +114,18 @@ m_full = rbind(gene_male, res_filter) %>%
 # Write out expanded gene_list
 fwrite(m_full, file.path(opt$work_dir, "gene_lists", opt$male_out), col.names = TRUE, row.names = FALSE)
 
-
-
 rm(list=ls())
 
-##################################################################################################################
+##############################################################
 ## Repeat for Female
-##################################################################################################################
+gene_female <- read.table(file.path(opt$work_dir, opt$input_gene_list), header = TRUE)
 
-# Read in Female gene list (filtered 2 gene list = Genes with priority score 1 + SORL1, ALPL, HLA [lit support])
-gene_female <- read.table(file.path(opt$work_dir, "gene_lists", opt$female_list), header = TRUE)
+# Fitler gene list to male genes with score 1
+gene_female = gene_list %>% 
+  filter(ad_sample == "Female",
+         score == "1" | score == "1*",
+         gene_name != "ALPL" & gene_name != "ABCA7" & gene_name != "HS3ST1") %>% 
+  dplyr::select(gene_name)
 
 # Check Gene Symbols
 check_gene_female <- checkGeneSymbols(
@@ -142,9 +136,7 @@ check_gene_female <- checkGeneSymbols(
   species = "human",
   expand.ambiguous = FALSE
 )
-
 colnames(gene_female) <- "hgnc_names"
-
 
 # druggable tiers file (same as the package)
 druggable_tiers <- readxl::read_excel("aag1166_Table S1.xlsx")
@@ -170,11 +162,9 @@ druggable_tiers2 <- inner_join(druggable_tiers,check_gene_dt,by='hgnc_names') %>
   dplyr::select(Suggested.Symbol, druggability_tier) %>% 
   dplyr::rename(hgnc_names = Suggested.Symbol)
 
-
 # find druggable info for raw gene list
 candidate_gene_tiers <- data.frame(hgnc_names=gene_female$hgnc_names)
 candidate_gene_tiers <- left_join(candidate_gene_tiers,druggable_tiers2)
-
 
 # find related genes (ppi) + druggable info
 ppi_df_all <- data.frame()
@@ -189,8 +179,6 @@ for (i in 1:length(gene_female$hgnc_names)) {
 }
 
 ppi_df_all$disease_related <- NA  # Create a new empty column
-
-
 
 # Loop through each interacting gene in g2.name
 for (i in seq_len(nrow(ppi_df_all))) {
@@ -215,7 +203,6 @@ res_filter = res %>%
   dplyr::select(`g2.name`) %>% 
   dplyr::rename(hgnc_names = `g2.name`) 
 
-
 # Add expanded genes to raw gene list - get unique gene_names
 f_full = rbind(gene_female, res_filter) %>% 
   distinct(hgnc_names) %>% 
@@ -223,14 +210,6 @@ f_full = rbind(gene_female, res_filter) %>%
 
 # Write out expanded gene_list
 fwrite(f_full, file.path(opt$work_dir, "gene_lists", opt$female_out), col.names = TRUE, row.names = FALSE)
-
-
-
-rm(list=ls())
-
-
-## End of code
-## Next reference "2_drug_enrichment_script.R" to run enrichment analysis on the expanded gene lists
 
 sessionInfo()
 # R version 4.4.2 (2024-10-31)

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define variables
-SMR_BIN="/storage2/fs1/belloy2/Active/04_Code/$USER/SMR/smr"
-BFILE="/storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_reference_genotype_data/EU_TOPMed/TOPMed_merged"
-PQTL_BESD="/storage2/fs1/belloy2/Active/05_Projects/$USER/SMR/CSF_Brain_pQTL_besd"
-OUT_DIR="/storage2/fs1/belloy2/Active/05_Projects/$USER/SMR"
+SMR_BIN="smr"
+BFILE="/EUR_1000G_ref_panel_inPLINK_format_all_chr_merged/including/full/path"
+PQTL_BESD="/Path/where/pQTL/output/saved/CSF_Brain_merged_pQTL_besd"
+OUT_DIR="/Path/to/save/output/files"
 THREADS=10
 
 # Make SMR binary executable

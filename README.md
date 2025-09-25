@@ -1,5 +1,4 @@
-Integrative Genetic, Proteogenomic, and Multi-omics Analyses Reveal Sex-Biased Causal Genes and Drug Targets in Alzheimer’s Disease.
----
+**AD Sex-Biased Genomics & Proteomics**
 
 ## Background
 To elucidate sex differences in Alzheimer’s disease (AD), we conducted the largest-to-date sex-stratified genome-wide association study (GWAS) and Proteome-wide association study (PWAS) of AD in brain and cerebrospinal fluid (CSF) proteogenomic datasets. This repository provides codes and files related to these analyses and a series of downstream analyses.

@@ -10,31 +10,22 @@ library(optparse)
 option_list <- list(
   make_option("--work_dir", type = "character", help = "Working directory"),
   make_option("--results_in", type = "character", help = "Input enrichment results CSV"),
-  make_option("--plot3_out", type = "character", help = "Output 3-cell barplot (jpg)"),
-  make_option("--plot5_out", type = "character", default = NULL,
-              help = "Optional output 5-cell barplot (jpg)")
+  make_option("--out_fig", type = "character", help = "Output 3-cell barplot (jpg)"),
 )
 opt <- parse_args(OptionParser(option_list = option_list))
 if (is.null(opt$work_dir)) stop("--work_dir is required")
 dir.create(opt$work_dir, showWarnings = FALSE, recursive = TRUE)
 setwd(opt$work_dir)
 
-
-setwd(opt$work_dir)
-
-##########################################################################################################################################
 ## Read in comprehensive results
 all = fread(file.path(opt$work_dir, "results", opt$results_in), header = TRUE) %>% 
   dplyr::select(-V8:-V19)
 
-
-##########################################################################################################################################
 # Filter to include results when using full gene list
 all1 = all %>% 
   filter(gene_set == "All Female" | gene_set == "All Male") %>% 
   mutate(Sex = case_when(gene_set == "All Female" ~ "Female",
                          T ~ "Male"))
-
 
 # Create the horizontal bar plot
 p1 <- ggplot(all1, aes(x = fold_enrichment, y = cell_type, fill = Sex)) +
@@ -59,25 +50,14 @@ p1 <- ggplot(all1, aes(x = fold_enrichment, y = cell_type, fill = Sex)) +
     plot.margin = margin(t = 15, r = 10, b = 15, l = 10, unit = "pt"))
 
 # Print the plot
-print(p1)
+# print(p1)
 
-# Save plot
-if (!is.null(opt$plot5_out)) {
-file_name <- opt$plot5_out
-out_dir <- file.path(opt$work_dir, "results")
-file_path <- file.path(out_dir, file_name)
-ggsave(filename = file_path, plot = p1, device = "jpg", width = 6, height = 6, dpi = 320)
-}
-
-
-##########################################################################################################################################
 # Filter to include results for 3 main cell-types
 all2 = all1 %>% 
   filter(gene_set == "All Female" | gene_set == "All Male") %>% 
   filter(cell_type != "Endothelial Cells" & cell_type != "Oligodendrocytes") %>% 
   mutate(Sex = case_when(gene_set == "All Female" ~ "Female",
                          T ~ "Male"))
-
 
 # Create the horizontal bar plot
 p2 <- ggplot(all2, aes(x = fold_enrichment, y = cell_type, fill = Sex)) +
@@ -105,12 +85,11 @@ p2 <- ggplot(all2, aes(x = fold_enrichment, y = cell_type, fill = Sex)) +
 print(p2)
 
 # Save plot
-file_name <- opt$plot3_out
+file_name <- opt$out_fig
 out_dir <- file.path(opt$work_dir, "results")
 
 file_path <- file.path(out_dir, file_name)
 ggsave(filename = file_path, plot = p2, device = "jpg", width = 6, height = 6, dpi = 320)
-
 
 sessionInfo()
 # R version 4.4.2 (2024-10-31)

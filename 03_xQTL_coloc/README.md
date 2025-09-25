@@ -1,5 +1,7 @@
+**AD Sex-Biased Genomics & Proteomics**
+
 # xQTL Colocalization Pipeline
-The aim of this is to utilize a wide range of QTL datasets to run QTL colocalization analyses with a target dataset. In the example codes provided, the target dataset is a non-stratified GWAS of Alzheimer's disease.
+The aim of this pipeline is to utilize a wide range of QTL datasets to run QTL colocalization analyses with a target dataset. In the example codes provided, the target dataset is a non-stratified GWAS of Alzheimer's disease.
 
 ## Requirements
 * Bash
@@ -30,7 +32,8 @@ The aim of this is to utilize a wide range of QTL datasets to run QTL colocaliza
   5. locus_index - locus of interest for QTL colocalization analysis
   6. stratum - indicate which stratum oof the target dataset that will be used
   7. discovery - (optional) used to label output data and locus compare plots
- 
+
+
 ---
 **Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
 **License:** MIT (see [main repository README](../README.md) for full text).

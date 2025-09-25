@@ -47,19 +47,6 @@ Rscript PWAS/analysis_codes/Fgiures_Tables/TableS23.R \
 
 ## Figures
 
-```bash
-
-```bash
-Rscript PWAS/analysis_codes?Fogures_Tables/DotPlot_Figure2C.R \
-        --dir PWAS/Figures_Tables/ \
-        --dat ADGC_ADSP_UKB_FinnGen_cc_rb.gen090.noAPOE.shared_var.W23nCSF.hg38_top-sex-specific-genes_dotplot_matrix.txt \
-        --f_ss_genes ADGC_ADSP_UKB_FinnGen_Females_cc_rb.gen090.noAPOE.shared_var.W23nCSF.hg38_PWAS_noMHC_ext2Mb_top-female-specific-genes_ExDMR.txt \
-        --m_ss_genes ADGC_ADSP_UKB_FinnGen_Males_cc_rb.gen090.noAPOE.shared_var.W23nCSF.hg38_PWAS_noMHC_ext2Mb_top-male-specific-genes_ExDMR.txt
-```
-![**Figure.**:Dotplot](Images/Dotplot.png)
-
-  
-
 ### Circos plot
 ```bash
 Rscript PWAS/analysis_codes?Fogures_Tables/CircosPlot_Figure2B.R \
