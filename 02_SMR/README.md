@@ -1,6 +1,6 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-## Summary-based Mendelian Randomization (SMR) Analysis Pipeline
+## Summary-based Mendelian Randomization (SMR) Analyses
 
 ---
 
