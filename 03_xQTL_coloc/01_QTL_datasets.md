@@ -2,8 +2,6 @@
 
 ## xQTL Colocalization Workflow
 
----
-
 The aim of this pipeline is to utilize a wide range of QTL datasets to run QTL colocalization analyses with a target GWAS dataset, covering a specific set genetic loci. 
 
 ## Requirements
