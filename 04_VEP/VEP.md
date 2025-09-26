@@ -4,9 +4,12 @@
 
 Variant Effect Predictor (VEP) analysis was performed on both GWAS amd PWAS loci. Variants must be preprocessed into standard VCF format before being submitted to the Ensembl VEP web tool. Both GWAS and PWAS variants are given in the Variants_list folder in both VCF and CSV format for VEP analysis.
 
----
+# split here into readme.me and analysis.md
 
-### VEP Analysis
+**AD Sex-Biased Genomics & Proteomics**
+
+## Variant Effect Predictor Analysis
+
 - Upload the VCF files directly to the Ensembl VEP web (https://useast.ensembl.org/Tools/VEP) tool.
 - Use default parameters, with the following modifications:
     - Species: Homo sapiens
