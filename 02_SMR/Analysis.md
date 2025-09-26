@@ -2,8 +2,6 @@
 
 ## Summary-based Mendelian Randomization (SMR) Analyses
 
----
-
 ## 🧹 Step 1: Clean GWAS Summary Statistics
 ```bash
 Cd 02_SMR
