@@ -1,5 +1,11 @@
 **AD Sex-Biased Genomics & Proteomics**
 
+## Summary-based Mendelian Randomization (SMR) Analyses
+
+---
+
+**AD Sex-Biased Genomics & Proteomics**
+
 # Summary-based Mendelian Randomization (SMR) Analysis Pipeline
 This repository documents a complete pipeline to perform SMR analysis integrating sex-stratified GWAS and pQTL datasets from CSF and brain tissue to identify potential causal genes for Alzheimer's Disease (AD).
 
