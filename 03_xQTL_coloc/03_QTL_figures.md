@@ -15,7 +15,7 @@ Rscript analysis_codes/figures/01_xQTL_incGWASPWAS_figures_preprocessing.R \
     --out_haqtl ref_PWAS_GWAS_top_haQTL_results.csv \
     --out_caqtl ref_PWAS_GWAS_top_caQTL_results.csv\
 ```
-Tip: --abf_dir and --susie_dir are directories relative to --work_dir. Place your input CSVs there or adjust the names to match your layout.
+Note: --abf_dir and --susie_dir are directories relative to --work_dir. Place your input CSVs there or adjust the names to match your layout.
 
 ### xQTL COLOC and DEG summary figures
 This plot (Fgiure 3 in the paper) includes results summarized findings from the xQTL COLOC analyses and protein differential abudance analyses for genes prioritized through PWAS or pQTL COLOC.
