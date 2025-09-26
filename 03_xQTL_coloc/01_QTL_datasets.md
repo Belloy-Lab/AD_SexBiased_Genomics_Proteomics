@@ -1,14 +1,16 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-# xQTL Colocalization Pipeline
-The aim of this pipeline is to utilize a wide range of QTL datasets to run QTL colocalization analyses with a target dataset. In the example codes provided, the target dataset is a non-stratified GWAS of Alzheimer's disease.
+## xQTL Colocalization
+
+---
+
+The aim of this pipeline is to utilize a wide range of QTL datasets to run QTL colocalization analyses with a target GWAS dataset, covering a specific set genetic loci. 
 
 ## Requirements
 * R Packages: [coloc](https://cran.r-project.org/web/packages/coloc/index.html).
  * Target dataset (GWAS summary stats for specific phenotype)
  * QTL datasets - see QTL_datasets.md for list of possible QTL datasets and tissues
 
- 
 ## Workflow
 * Create input reference file for the bash scipt with the following variables:
   1. study - Study from which QTL dataset comes from
@@ -26,6 +28,7 @@ The aim of this pipeline is to utilize a wide range of QTL datasets to run QTL c
   7. discovery - (optional) used to label output data and locus compare plots
 
 ## Datasets 
+
 ### eQTLs
 * eQTL Catalogue eQTLs: 69 tissue/cell types across 10 studies (Gtex_v8, CommonMind, Braineac2, Young 2019, Kasela 2017, BLUEPRINT, CEDAR, Fairfax 2014, Quach 2016, Nedelec 2016)
   * Access at: https://github.com/eQTL-Catalogue/eQTL-Catalogue-resources/blob/master/data_tables/dataset_metadata.tsv
@@ -49,14 +52,12 @@ The aim of this pipeline is to utilize a wide range of QTL datasets to run QTL c
   * Access at: [https://download.metabrain.nl/files.html](https://yanglab.westlake.edu.cn/software/smr/#DataResource)
   * Build: GRCh37
 
-
 ### sQTLs
 * eQTL Catalogue sQTLs: 62 tissue/cell types across 6 studies (Gtex_v8, CommonMind, Braineac2, BLUEPRINT, Quach 2016, Nedelec 2016)
   * Access at: https://github.com/eQTL-Catalogue/eQTL-Catalogue-resources/blob/master/data_tables/dataset_metadata.tsv
   * quant_method: 'leafcutter'
   * Build: GRCh38
  
-
 ### pQTLS 
 * Wingo 2023 pQTLs: 1 tissue (DLPFC) across 3 stratum (Non-stratifed, Female, Male)
   * Access at: https://www.synapse.org/Synapse:syn51150434/wiki/621280
@@ -67,7 +68,8 @@ The aim of this pipeline is to utilize a wide range of QTL datasets to run QTL c
   * Access at: http://nilanjanchatterjeelab.org/pwas/
 
 ## Data formats and Organization
-### Genes or SNPs input format
+
+### SNP/gene/Locus input format
 This CSV file defines the genomic regions or loci of interest to be used as input for the xQTL mapping pipeline. Each row corresponds to a specific locus identified in prior analyses (e.g., GWAS, PWAS) and includes chromosomal coordinates, the associated gene name or locus label, and stratification metadata.
 
 Column descriptions:
@@ -87,9 +89,7 @@ Table : Example input gene list.
 | 1     | 150500305 | 151504836 | 151002570.5| MINDY1    | Female  | Brain     |
 | 1     | 151277945 | 152287266 | 151782605.5| TDRKH     | Female  | Brain     |
 
-
 Once the list is finalized, please move the CSV file into the 04_Code directory on the server.
-Let me know when you're ready to document the next input or step!
 
 ### QTL Dataset Format and Organization
 This section outlines the structure and requirements for incorporating QTL datasets into the analysis pipeline.
