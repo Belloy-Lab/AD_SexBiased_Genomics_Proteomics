@@ -1,6 +1,6 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-## xQTL Colocalization
+## xQTL Colocalization Workflow
 
 ---
 
