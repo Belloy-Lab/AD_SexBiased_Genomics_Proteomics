@@ -2,8 +2,6 @@
 
 ## xQTL Colocalization Analysis
 
----
-
 ### 1. Job Submission Scripts
 The analysis is initiated by submitting jobs via the Bash scripts located in the folder:
 
