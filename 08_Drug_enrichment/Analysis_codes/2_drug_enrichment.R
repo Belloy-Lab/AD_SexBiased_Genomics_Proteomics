@@ -27,7 +27,7 @@ if (is.null(opt$work_dir)) stop("--work_dir is required")
 dir.create(opt$work_dir, showWarnings = FALSE, recursive = TRUE)
 setwd(opt$work_dir)
 
-gmt_df_DSigDB <- read.gmt(file.path(opt$work_dir, opt$dsigdb_gmt))
+gmt_df_DSigDB <- read.gmt(file.path(opt$work_dir, "input_files", opt$dsigdb_gmt))
 gmt_df_DSigDB$term <- sub("_.*", "", gmt_df_DSigDB$term) # Merge identical drugs from different databases by removing suffixes
 
 # update gene symbol in gmt_df_DSigDB
@@ -50,8 +50,8 @@ gmt_df_DSigDB <- gmt_df_DSigDB[,1:2]
 
 
 # read gene list male/female
-gene_male <- read.table(file.path(opt$work_dir, "gene_lists", opt$male_list), header = TRUE)
-gene_female <- read.table(file.path(opt$work_dir, "gene_lists", opt$female_list), header = TRUE)
+gene_male <- read.table(file.path(opt$work_dir, opt$male_list), header = TRUE)
+gene_female <- read.table(file.path(opt$work_dir, opt$female_list), header = TRUE)
 
 # Check gene symbols in female and male gene lists
 check_gene_male <- checkGeneSymbols(
@@ -96,7 +96,7 @@ enrich_res_female <- enricher(
 
 # Write out female results
 enrich_res_female <- as.data.frame(enrich_res_female)
-writexl::write_xlsx(enrich_res_female, file.path(opt$work_dir, "results", opt$female_out))
+writexl::write_xlsx(enrich_res_female, file.path(opt$work_dir, opt$female_out))
 
 
 # enrichment analysis gene male
@@ -113,11 +113,7 @@ enrich_res_male <- enricher(
   TERM2NAME = NA
 )
 enrich_res_male <- as.data.frame(enrich_res_male)
-writexl::write_xlsx(enrich_res_male, file.path(opt$work_dir, "results", opt$male_out))
-
-
-## End of code
-## Next reference "3_drug_enrichment_result_filtering.R" to apply filters to sex-specifc drugs identifed from analyses.
+writexl::write_xlsx(enrich_res_male, file.path(opt$work_dir, opt$male_out))
 
 sessionInfo()
 # R version 4.4.2 (2024-10-31)

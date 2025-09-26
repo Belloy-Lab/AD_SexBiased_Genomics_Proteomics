@@ -98,6 +98,8 @@ Each analysis generates the following key outputs (naming depends on --out_GWAS 
 - PWAS association results:
   - <out_dir>/<tissue>/<sex>/*.chr.dat
 
+---
 **Citation:** see [main repository README](../README.md) 
 **License:** see [main repository README](../README.md)
+
 

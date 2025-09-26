@@ -46,5 +46,5 @@ Rscript analysis_codes/figures/DotPlot.R \
 ![**Figure.**:Dotplot](results/Dotplot.png)
 
 ---
-**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
-**License:** MIT (see [main repository README](../README.md) for full text).
+**Citation:** see [main repository README](../README.md) 
+**License:** see [main repository README](../README.md)

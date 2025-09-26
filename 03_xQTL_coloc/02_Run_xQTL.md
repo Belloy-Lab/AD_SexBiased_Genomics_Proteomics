@@ -74,5 +74,5 @@ bash other_xQTL_susie.sh
 These Bash scripts will call the corresponding R scripts, which in turn source all necessary helper scripts to execute the Coloc analysis for the specified combinations of GWAS and xQTL datasets.
 
 ---
-**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
-**License:** MIT (see [main repository README](../README.md) for full text).
+**Citation:** see [main repository README](../README.md) 
+**License:** see [main repository README](../README.md)

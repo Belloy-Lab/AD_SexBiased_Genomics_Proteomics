@@ -41,5 +41,6 @@ After running the above commands, you’ll have a clean, organized folder layout
 - Final results  
 - Project-specific scripts  
 
+---
 **Citation:** see [main repository README](../README.md) 
 **License:** see [main repository README](../README.md)

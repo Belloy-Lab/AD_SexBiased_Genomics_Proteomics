@@ -1,7 +1,9 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-# SMR Analysis: Execution Guide
-This document outlines the computational steps and corresponding job submission commands to perform Summary-based Mendelian Randomization (SMR) analysis using sex-stratified GWAS and pQTL data from CSF and brain tissue.
+# Summary-based Mendelian Randomization (SMR) Analysis Pipeline
+This repository documents a complete pipeline to perform SMR analysis integrating sex-stratified GWAS and pQTL datasets from CSF and brain tissue to identify potential causal genes for Alzheimer's Disease (AD).
+
+Tool Reference: [SMR & HEIDI Software](https://yanglab.westlake.edu.cn/software/smr/#SMR&HEIDIanalysis)
 
 ## 🧹 Step 1: Clean GWAS Summary Statistics
 ```bash
@@ -73,6 +75,6 @@ Rscript analysis_codes/Process_SMR_results.R \
   --output SMR_results_filtered.txt
 ```
 ---
+**Citation:** see [main repository README](../README.md) 
+**License:** see [main repository README](../README.md)
 
-**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
-**License:** MIT (see [main repository README](../README.md) for full text).

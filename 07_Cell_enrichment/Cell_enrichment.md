@@ -30,5 +30,5 @@ Rscript analysis_codes/2_cell_specific_figures.R \
 ![**Figure.**:Bar plot](results/cell-type_enrichment_barplot_Filtered.jpg)
 
 ---
-**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
-**License:** MIT (see [main repository README](../README.md) for full text).
+**Citation:** see [main repository README](../README.md) 
+**License:** see [main repository README](../README.md)

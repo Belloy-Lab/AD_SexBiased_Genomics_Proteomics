@@ -9,7 +9,7 @@ library(optparse)
 option_list <- list(
   make_option("--work_dir", type = "character", help = "Working directory"),
   make_option("--hormone_csv", type = "character", help = "Classified sex hormone drugs CSV"),
-  make_option("--female_filter2", type = "character", help = "Female filter2 enrichment CSV"),
+  make_option("--female_input", type = "character", help = "Female filtered enrichment CSV"),
   make_option("--ppi_df_female", type = "character", help = "Female PPI DF CSV"),
   make_option("--female_out", type = "character", help = "Output female hormone drugs CSV"),
   make_option("--network_out", type = "character", help = "Output network edges CSV for Cytoscape"),
@@ -28,14 +28,14 @@ setwd(opt$work_dir)
 hormone <- fread(file.path(opt$work_dir, opt$hormone_csv))
 
 # Read in female drug enrichment results (filter2: significant and 1.5-fold)
-f1_FDA_filter2 = fread(file.path(opt$work_dir, "results", opt$female_filter2))
+f1_FDA_filter2 = fread(file.path(opt$work_dir, opt$female_input))
 
 # Female
 drug_enrich_res <- f1_FDA_filter2 %>%
   filter(ID %in% hormone$ID & Count >= 3)
 
 # Write out drug_enrich_results
-fwrite(drug_enrich_res, file.path(opt$work_dir, "results", opt$female_out))
+fwrite(drug_enrich_res, file.path(opt$work_dir, opt$female_out))
 
 
 ###############################################################################################################################################################
@@ -46,7 +46,7 @@ drug_enrich_res_expanded <- drug_enrich_res %>%
   select(ID,geneID)
 
 # Read in PPI related genes from step 1
-related_gene <- fread(file.path(opt$work_dir, "network", opt$ppi_df_female))
+related_gene <- fread(file.path(opt$work_dir, "input_files", opt$ppi_df_female))
 related_gene <- select(related_gene,g1.name,g2.name)
 filtered_related_gene <- related_gene %>%
   filter(g2.name %in% drug_enrich_res_expanded$geneID)
@@ -56,7 +56,7 @@ network <- data.frame(Node1=c(drug_enrich_res_expanded$ID,filtered_related_gene$
                       Node2=c(drug_enrich_res_expanded$geneID,filtered_related_gene$g2.name))
 
 # Write out network file
-fwrite(network, file.path(opt$work_dir, "network", opt$network_out), row.names = FALSE, quote = FALSE)
+fwrite(network, file.path(opt$work_dir,opt$network_out), row.names = FALSE, quote = FALSE)
 
 
 ###############################################################################################################################################################
@@ -82,11 +82,10 @@ ppi_node_type <- data.frame(Node=c(drug_enrich_res$ID,gene_long$gene),
                             Type=c(rep("drug",nrow(drug_enrich_res)),gene_long$source))
 
 # Write out node type file
-fwrite(ppi_node_type, file.path(opt$work_dir, "network", opt$node_out), row.names = FALSE, quote = FALSE)
+fwrite(ppi_node_type, file.path(opt$work_dir, opt$node_out), row.names = FALSE, quote = FALSE)
 
 
 # End of script
-
 sessionInfo()
 # R version 4.4.2 (2024-10-31)
 # Platform: x86_64-pc-linux-gnu

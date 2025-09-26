@@ -21,7 +21,7 @@ setwd(opt$work_dir)
 
 ## Male
 # Read in Male gene list (filtered 2 gene list = Genes with priority score 1 + MAPT [lit support])
-gene_male <- read.table(file.path(opt$work_dir, opt$input_gene_list), header = TRUE)
+gene_male <- read.table(file.path(opt$work_dir, "input_files", opt$input_gene_list), header = TRUE)
 
 # Fitler gene list to male genes with score 1
 gene_male = gene_list %>% 
@@ -42,7 +42,7 @@ check_gene_male <- checkGeneSymbols(
 colnames(gene_male) <- "hgnc_names"
 
 # druggable tiers file (same as the package)
-druggable_tiers <- readxl::read_excel("aag1166_Table S1.xlsx")
+druggable_tiers <- readxl::read_excel("input_files/aag1166_Table S1.xlsx")
 druggable_tiers <- as.data.frame(druggable_tiers) %>% 
   dplyr::select(hgnc_names,druggability_tier)
 
@@ -112,7 +112,7 @@ m_full = rbind(gene_male, res_filter) %>%
   dplyr::rename(gene_name = hgnc_names)
 
 # Write out expanded gene_list
-fwrite(m_full, file.path(opt$work_dir, "gene_lists", opt$male_out), col.names = TRUE, row.names = FALSE)
+fwrite(m_full, file.path(opt$work_dir, opt$male_out), col.names = TRUE, row.names = FALSE)
 
 rm(list=ls())
 
@@ -139,7 +139,7 @@ check_gene_female <- checkGeneSymbols(
 colnames(gene_female) <- "hgnc_names"
 
 # druggable tiers file (same as the package)
-druggable_tiers <- readxl::read_excel("aag1166_Table S1.xlsx")
+druggable_tiers <- readxl::read_excel("input_files/aag1166_Table S1.xlsx")
 druggable_tiers <- as.data.frame(druggable_tiers) %>% 
   dplyr::select(hgnc_names,druggability_tier)
 
@@ -209,7 +209,7 @@ f_full = rbind(gene_female, res_filter) %>%
   dplyr::rename(gene_name = hgnc_names)
 
 # Write out expanded gene_list
-fwrite(f_full, file.path(opt$work_dir, "gene_lists", opt$female_out), col.names = TRUE, row.names = FALSE)
+fwrite(f_full, file.path(opt$work_dir, opt$female_out), col.names = TRUE, row.names = FALSE)
 
 sessionInfo()
 # R version 4.4.2 (2024-10-31)

@@ -31,15 +31,15 @@ convert_gene_ratio <- function(gene_ratio) {
 
 
 # Read in male and female outputs from Drug Enrichment Analysis - List 1 (No filters) expanded
-f1 = read_excel(file.path(opt$work_dir, "results", opt$female_list)) %>%
+f1 = read_excel(file.path(opt$work_dir, opt$female_list)) %>%
        mutate(Sex = 'Female', GeneRatio_num = convert_gene_ratio(GeneRatio))
 
-m1 = read_excel(file.path(opt$work_dir, "results", opt$male_list)) %>%
+m1 = read_excel(file.path(opt$work_dir, opt$male_list)) %>%
        mutate(Sex = 'Male',   GeneRatio_num = convert_gene_ratio(GeneRatio))
 
 ###############################################################################################################################################################
 # Read in FDA approaved GMT file
-gmt_df_FDA <- read.gmt(file.path(opt$work_dir, opt$FDA_gmt))
+gmt_df_FDA <- read.gmt(file.path(opt$work_dir, "input_files", opt$FDA_gmt))
 gmt_df_FDA = as.data.frame(gmt_df_FDA) %>% 
   distinct(term)
 ## Filter lists to only include FDA approved drugs
@@ -69,8 +69,8 @@ m1_FDA_filter2 <- m1_FDA %>%
   select(-GeneRatio_f)
 
 
-fwrite(f1_FDA_filter2, file.path(opt$work_dir, "results", opt$female_out))
-fwrite(m1_FDA_filter2, file.path(opt$work_dir, "results", opt$male_out))
+fwrite(f1_FDA_filter2, file.path(opt$work_dir, opt$female_out))
+fwrite(m1_FDA_filter2, file.path(opt$work_dir, opt$male_out))
 
 sessionInfo()
 # R version 4.4.2 (2024-10-31)
