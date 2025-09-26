@@ -2,8 +2,9 @@
 
 ## Summary-based Mendelian Randomization (SMR) Analysis Pipeline
 
-SMR analyses were conducted across GWAS and pQTL datasets from cerebrospinal fluid (CSF) and brain tissue to validate genes identified in AD PWAS.
 ---
+
+SMR analyses were conducted across GWAS and pQTL datasets from cerebrospinal fluid (CSF) and brain tissue to validate genes identified in AD PWAS.
 
 ## 🔬 Overview
 
