@@ -1,7 +1,8 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-## xQTL Colocalization Analysis Overview
-This repository contains scripts to perform colocalization (Coloc) analysis using AD sex strat GWAS datasets across 169 xQTL datasets (including eQTL, pQTL, sQTL, mQTL, caQTL, and haQTL). The analysis supports both ABF and SUSiE methods.
+## xQTL Colocalization Analysis
+
+---
 
 ### 1. Job Submission Scripts
 The analysis is initiated by submitting jobs via the Bash scripts located in the folder:
