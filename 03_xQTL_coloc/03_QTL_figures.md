@@ -1,6 +1,6 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-## xQTL Figures
+## xQTL Colocalization Figures
 
 ```bash
 Rscript analysis_codes/figures/01_xQTL_incGWASPWAS_figures_preprocessing.R \
