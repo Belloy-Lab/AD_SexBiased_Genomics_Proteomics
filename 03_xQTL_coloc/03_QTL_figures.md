@@ -18,7 +18,7 @@ Rscript analysis_codes/figures/01_xQTL_incGWASPWAS_figures_preprocessing.R \
 Note: --abf_dir and --susie_dir are directories relative to --work_dir. Place your input CSVs there or adjust the names to match your layout.
 
 ### xQTL COLOC and DEG summary figures
-This plot (Fgiure 3 in the paper) includes results summarized findings from the xQTL COLOC analyses and protein differential abudance analyses for genes prioritized through PWAS or pQTL COLOC.
+This plot (Figure 3 in the paper) includes results summarized findings from the xQTL COLOC analyses and protein differential abudance analyses for genes prioritized through PWAS or pQTL COLOC.
 
 ```bash
 Rscript analysis_codes/figures/02_xQTL_incGWASPWAS_figures.R \
@@ -35,7 +35,7 @@ Rscript analysis_codes/figures/02_xQTL_incGWASPWAS_figures.R \
 
 
 ### PWAS & pQTL SMR/COLOC summary figure
-This plot (Fgiure 2C in the paper) includes results from PWAS, SMR and Brain & CSF pQTL coloc analyses.
+This plot (Figure 2C in the paper) includes results from PWAS, SMR and Brain & CSF pQTL coloc analyses.
 
 ```bash
 Rscript analysis_codes/figures/DotPlot.R \
