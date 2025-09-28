@@ -1,13 +1,8 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-## Variant Effect Predictor
-This repo contains analysis methods and R scripts for performing Variant Effect Predictor (VEP) analysis. Variants must be preprocessed into standard VCF format before being submitted to the Ensembl VEP web tool.
-
+## VEP Analysis
 Both GWAS and PWAS variants are given in the Variants_list folder in both VCF and CSV format forthe VEp analysis.
 
----
-
-### VEP Analysis
 - Upload the VCF files directly to the Ensembl VEP web (https://useast.ensembl.org/Tools/VEP) tool.
 - Use default parameters, with the following modifications:
     - Species: Homo sapiens
@@ -18,7 +13,7 @@ Both GWAS and PWAS variants are given in the Variants_list folder in both VCF an
 
 Both resulting .txt files from the VEP analysis (GWAS and PWAS) will be processed using the R script provided below.
 
-### Post-processing
+## Post-processing
 ```bash
 Rscript analysis_codes/VEP_figures.R \
 	--VEP_Dir variants_list/ \

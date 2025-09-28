@@ -1,8 +1,5 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-# Pathway Enrichment Analysis
-This repository contains scripts for performing and visualizing Gene Ontology (GO) pathway enrichment analysis in a sex-stratified manner. The workflow includes clustering similar GO terms and generating figures and word clouds to summarize biological signals from female and male datasets.
-
 ## Pathway Enrichment Analysis
 Run the main enrichment script to perform GO term enrichment for both female and male gene sets.
 

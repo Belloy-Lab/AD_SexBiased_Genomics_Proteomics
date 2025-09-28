@@ -1,10 +1,9 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-## Summary-based Mendelian Randomization (SMR) Analysis Pipeline
+# Summary-based Mendelian Randomization (SMR) Analysis Pipeline
+This repository documents a complete pipeline to perform SMR analysis integrating sex-stratified GWAS and pQTL datasets from CSF and brain tissue to identify potential causal genes for Alzheimer's Disease (AD).
 
----
-
-SMR analyses were conducted across GWAS and pQTL datasets from cerebrospinal fluid (CSF) and brain tissue to validate genes identified in AD PWAS.
+Tool Reference: [SMR & HEIDI Software](https://yanglab.westlake.edu.cn/software/smr/#SMR&HEIDIanalysis)
 
 ## 🔬 Overview
 
@@ -17,7 +16,6 @@ This pipeline covers:
 Tool Reference: [SMR & HEIDI Software](https://yanglab.westlake.edu.cn/software/smr/#SMR&HEIDIanalysis)
 
 ---
-
-**Citation:** If you use these scripts, please cite our PWAS paper (in preparation).  
-**License:** MIT (see [main repository README](../README.md) for full text).
+**Citation:** see [main repository README](../README.md) 
+**License:** see [main repository README](../README.md)
 
