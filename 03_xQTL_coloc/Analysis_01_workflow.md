@@ -1,6 +1,7 @@
 **AD Sex-Biased Genomics & Proteomics**
 
 ## Datasets 
+
 ### eQTLs
 * eQTL Catalogue eQTLs: 69 tissue/cell types across 10 studies (Gtex_v8, CommonMind, Braineac2, Young 2019, Kasela 2017, BLUEPRINT, CEDAR, Fairfax 2014, Quach 2016, Nedelec 2016)
   * Access at: https://github.com/eQTL-Catalogue/eQTL-Catalogue-resources/blob/master/data_tables/dataset_metadata.tsv
@@ -24,14 +25,12 @@
   * Access at: [https://download.metabrain.nl/files.html](https://yanglab.westlake.edu.cn/software/smr/#DataResource)
   * Build: GRCh37
 
-
 ### sQTLs
 * eQTL Catalogue sQTLs: 62 tissue/cell types across 6 studies (Gtex_v8, CommonMind, Braineac2, BLUEPRINT, Quach 2016, Nedelec 2016)
   * Access at: https://github.com/eQTL-Catalogue/eQTL-Catalogue-resources/blob/master/data_tables/dataset_metadata.tsv
   * quant_method: 'leafcutter'
   * Build: GRCh38
  
-
 ### pQTLS 
 * Wingo 2023 pQTLs: 1 tissue (DLPFC) across 3 stratum (Non-stratifed, Female, Male)
   * Access at: https://www.synapse.org/Synapse:syn51150434/wiki/621280
@@ -42,7 +41,8 @@
   * Access at: http://nilanjanchatterjeelab.org/pwas/
 
 ## Data formats and Organization
-### Genes or SNPs input format
+
+### SNP/gene/Locus input format
 This CSV file defines the genomic regions or loci of interest to be used as input for the xQTL mapping pipeline. Each row corresponds to a specific locus identified in prior analyses (e.g., GWAS, PWAS) and includes chromosomal coordinates, the associated gene name or locus label, and stratification metadata.
 
 Column descriptions:
@@ -62,9 +62,7 @@ Table : Example input gene list.
 | 1     | 150500305 | 151504836 | 151002570.5| MINDY1    | Female  | Brain     |
 | 1     | 151277945 | 152287266 | 151782605.5| TDRKH     | Female  | Brain     |
 
-
 Once the list is finalized, please move the CSV file into the 04_Code directory on the server.
-Let me know when you're ready to document the next input or step!
 
 ### QTL Dataset Format and Organization
 This section outlines the structure and requirements for incorporating QTL datasets into the analysis pipeline.

@@ -1,5 +1,7 @@
 **AD Sex-Biased Genomics & Proteomics**
 
+## Tables
+
 ### 
 
 ```bash
@@ -12,7 +14,6 @@ export PATH="/opt/conda/bin:$PATH"
 export LSF_DOCKER_ENTRYPOINT=/bin/bash
 ```
 
-## Tables
 ### EUR AD PWAS sex-specific results across the EU_all analyses by sex
 
 ```bash

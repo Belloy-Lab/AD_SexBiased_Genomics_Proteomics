@@ -1,6 +1,9 @@
+# split here into readme.me and analysis.md
+
 **AD Sex-Biased Genomics & Proteomics**
 
-## Analysis
+## Cell-Type Enrichment Analyses
+
 ### Step 1 — Cell-specific enrichment
 ```bash
 Rscript analysis_codes/1_cell_specific_analysis.R \

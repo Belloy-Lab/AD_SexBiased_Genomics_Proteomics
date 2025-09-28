@@ -1,7 +1,14 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-## Locus zoom plot
-We generate locus zoom plots to visualize the genetic architecture around prioritized genes, (eg., ARSA in Figure S18). These plots integrate AD GWAS signals with QTL datasets (pQTL, eQTL, mQTL) and local LD structure, enabling us to examine how association signals overlap across molecular traits and disease. This approach highlights potential causal variants and cell-type–specific mechanisms within defined genomic regions.
+## Locus zoom plots
+
+We generated multi-panel locus zoom plots to visualize the genetic architecture around PWAS prioritized genes. These plots cover (1) regular locus zoom plots across AD GWAS and pQTL signals, with a single tagging variant, or (2) novel multi-tag locus zoom plots across AD GWAS, pQTL, and other QTL datasets, with 3 tagging variants. Plots leveraged LD data directly available from AD GWAS stage 1 data, but can be adapated to include LD data from 1000 genomes.
+
+split here into readme.me and analysis.md
+
+**AD Sex-Biased Genomics & Proteomics**
+
+## Locus zoom plots analyses
 
 ### Environment Setup (Required Before Running Any Script)
 

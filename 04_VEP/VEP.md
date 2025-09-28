@@ -1,7 +1,7 @@
 **AD Sex-Biased Genomics & Proteomics**
 
 ## VEP Analysis
-Both GWAS and PWAS variants are given in the Variants_list folder in both VCF and CSV format forthe VEp analysis.
+Both GWAS and PWAS variants are given in the Variants_list folder in both VCF and CSV format forthe VEP analysis.
 
 - Upload the VCF files directly to the Ensembl VEP web (https://useast.ensembl.org/Tools/VEP) tool.
 - Use default parameters, with the following modifications:
@@ -25,7 +25,6 @@ Rscript analysis_codes/VEP_figures.R \
 ```
 
 ![**Figure 1.**:SNP Consequence Matrix by Locus](Results/PWAS_VEP_matrix_1a.png)
-Matrix shows VEP-annotated variant consequences for top GWAS and PWAS loci. Columns represent loci (gene names), and rows show functional consequence types. Red blocks indicate at least one SNP at that locus with the corresponding annotation. The plot highlights the range of functional impacts, including both coding and non-coding variants.
 
 ![**Figure 2.**:Plot](Results/PWAS_VEP_matrix_2a.png)
 

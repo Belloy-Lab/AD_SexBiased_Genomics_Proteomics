@@ -1,6 +1,6 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-## xQTL Figures
+## xQTL Colocalization Figures
 
 ```bash
 Rscript analysis_codes/figures/01_xQTL_incGWASPWAS_figures_preprocessing.R \
@@ -15,9 +15,11 @@ Rscript analysis_codes/figures/01_xQTL_incGWASPWAS_figures_preprocessing.R \
     --out_haqtl ref_PWAS_GWAS_top_haQTL_results.csv \
     --out_caqtl ref_PWAS_GWAS_top_caQTL_results.csv\
 ```
-Tip: --abf_dir and --susie_dir are directories relative to --work_dir. Place your input CSVs there or adjust the names to match your layout.
+Note: --abf_dir and --susie_dir are directories relative to --work_dir. Place your input CSVs there or adjust the names to match your layout.
 
-### Generate xQTL figures
+### xQTL COLOC and DEG summary figures
+This plot (Figure 3 in the paper) includes results summarized findings from the xQTL COLOC analyses and protein differential abudance analyses for genes prioritized through PWAS or pQTL COLOC.
+
 ```bash
 Rscript analysis_codes/figures/02_xQTL_incGWASPWAS_figures.R \
     --work_dir working/directory/contains/xQTL/results \
@@ -28,13 +30,12 @@ Rscript analysis_codes/figures/02_xQTL_incGWASPWAS_figures.R \
     --gnames_in updated_gene_names.csv \
     --index_in GWAS_PWAS_index_genes_novel_final.csv \
     --plot_out Fig3.png
-
 ```
 ![**Figure 1.**: Gene prioritization at novel sex-biased loci through multi-tissue, multi-QTL colocalization and protein differential abundance analyses. ](results/Fig3.png)
 
 
-### Dotplot
-This plot (Fgiure 2C in the paper) includes results from PWAS, SMR and Brain & CSF pQTL coloc analyses.
+### PWAS & pQTL SMR/COLOC summary figure
+This plot (Figure 2C in the paper) includes results from PWAS, SMR and Brain & CSF pQTL coloc analyses.
 
 ```bash
 Rscript analysis_codes/figures/DotPlot.R \
