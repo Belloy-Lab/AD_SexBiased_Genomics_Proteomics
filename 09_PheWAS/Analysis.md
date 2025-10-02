@@ -2,11 +2,11 @@
 
 ### Scripts
 - `01_Train_SVM.py` — Train SVM classifier.
-- `02_Hp1_prediction.py` — Predict Hp1 labels.
-- `03_CSF_phewas_code.R` — Run PheWAS scans for CSF phenotypes.
-- `04_CSF_phewas_append_results.R` — Collate/append CSF per‑phenotype results into a single table.
-- `03_plasma_phewas_code.R` — Run PheWAS scans for plasma phenotypes.
-- `04_plasma_phewas_append_results.R` — Collate/append plasma per‑phenotype results into a single table.
+- `02_Hp1_prediction.py` — Predict HP1.
+- `03_CSF_phewas_code.R` — Run CSF protein PheWAS.
+- `04_CSF_phewas_append_results.R` — Collate/append CSF per-protein results into a single table.
+- `03_plasma_phewas_code.R` — Run plasma protein PheWAS.
+- `04_plasma_phewas_append_results.R` — Collate/append plasma per‑protein results into a single table.
 
 
 ### How to run
