@@ -1,9 +1,8 @@
 **AD Sex-Biased Genomics & Proteomics**
 
-# PheWAS
-A Phenome-Wide Association Study (PheWAS) tests whether a genetic variant or locus is associated with many phenotypes across the phenome, revealing trait-wide effects.
+# Haptoglobin Analyses
 
-Here, we analyzed PheWAS across two tissues CSF and plasma using R, treating protein weights as phenotypes.
+Haptoglobin (HP) was identified in GWAS, PWAS, and gene prioritization analsyes. The locus has a well known structural variant HP1/HP2, which was further investigated. Using long-read sequencing data from the Stanford ADRC & SAMS cohorts, a Support Vector Classifier was trained to predict HP1 genotype and perform HP1 imputation in GWAS stages 1 & 2, as well as avaiable CSF and brain proteogenomics samples. A Phenome-Wide Association Study (PheWAS) was then conducted in CSF and brain proteogenomics samples spanning the HP locus and all available proteins.
 
 ## Data sources
 - Plasma protein weights and phenotype data from [Yang et al., 2025](https://www.nature.com/articles/s41467-025-62463-w#data-availability).
