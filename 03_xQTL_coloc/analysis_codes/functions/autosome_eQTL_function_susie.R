@@ -85,10 +85,10 @@ eQTL_colocalization <- function(merged, all_suggestive_snps, name_dset, LC_dir, 
       
       
       pl <- "plink1.9"
-      in_fold <- "/storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_reference_genotype_data/EU_TOPMed/"
+      in_fold <- "/EU_TOPMed/"
       in_file <- paste0("TOPMed_ch", chrom)
       
-      fold_w <- "/storage1/fs1/belloy/Active/05_Projects/noahc/opt_QTL/Xchr_LD/eQTL/"
+      fold_w <- "/eQTL/"
       snp_file <- paste0(fold_w, study, "_", tissue, "_eQTL_", discovery, "_", locus_index, ".txt")
       fwrite(snps_for_ld, snp_file, sep = "\t", col.names = FALSE)
       

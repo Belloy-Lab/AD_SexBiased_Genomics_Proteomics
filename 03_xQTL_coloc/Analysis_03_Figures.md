@@ -31,7 +31,7 @@ Rscript analysis_codes/figures/02_xQTL_incGWASPWAS_figures.R \
     --index_in GWAS_PWAS_index_genes_novel_final.csv \
     --plot_out Fig3.png
 ```
-![**Figure 1.**: Gene prioritization at novel sex-biased loci through multi-tissue, multi-QTL colocalization and protein differential abundance analyses. ](results/Fig3.png)
+![**Figure 1.**: Gene prioritization at novel sex-biased loci through multi-tissue, multi-QTL colocalization and protein differential abundance analyses. ](Results/Fig3.png)
 
 
 ### PWAS & pQTL SMR/COLOC summary figure
@@ -44,7 +44,7 @@ Rscript analysis_codes/figures/DotPlot.R \
         --f_ss_genes Top-female-specific-genes.txt \
         --m_ss_genes Top-male-specific-genes.txt
 ```
-![**Figure.**:Dotplot](results/Dotplot.png)
+![**Figure.**:Dotplot](Results/Dotplot.png)
 
 ---
 **Citation:** see [main repository README](../README.md) 

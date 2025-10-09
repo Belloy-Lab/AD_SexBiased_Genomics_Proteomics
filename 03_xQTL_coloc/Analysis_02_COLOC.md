@@ -47,9 +47,10 @@ Each R script will need the following paths correctly specified:
 
 Output folder for results and LocusCompare (LC) plots
 
-🔁 Again, please replace all instances of $USER with your actual username or desired folder name across all R and Bash scripts in the repository.
+### 3. Gencode annotation data
+Please download the GENCODE human gene annotation (release 42) in [GTF format](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_42/gencode.v42.annotation.gtf.gz) and place it in the analysis_codes/reference_files/ folder.
 
-### 3. Create Analysis Folder Structure
+### 4. Create Analysis Folder Structure
 This directory structure organizes the results of various xQTL analysis.
 
 Run the following commands to set up the full directory layout:
@@ -62,7 +63,8 @@ mkdir -p SUSIE_LCplots
 ```
 Please update the directory paths in the job submittion bash scripts.
 
-### 3. To Run the Analysis
+
+### 5. To Run the Analysis
 Submit the jobs using:
 ```bash
 bash xQTL_abf.sh

@@ -5,7 +5,7 @@ print(paste("Starting preprocessing for tissue:", study, tissue, qtl_type, sep =
 
 ##########################################
 ## pQTL file list
-source_dir = "/storage1/fs1/belloy/Active/02_Data/01_Incoming/NGI_CSF_pQTL_files/Other_Files/02_no_na_no_palindromics/"
+source_dir = "/Path_to_NGI_all_pQTL_files/"
 pQTL_files = list.files(source_dir, pattern = ".gz$", full.names = TRUE)
 
 ## Ref file that contains analyte and gene
@@ -208,7 +208,7 @@ for (i in 1:nrow(all_suggestive_snps)) {
   
   
   ## Source caQTL function
-  source("/storage2/fs1/belloy2/Active/04_Code/$USER/xQTL/functions/autosome_pQTL_function_abf.R")  
+  source("../autosome_pQTL_function_abf.R")  
   
   # Run caQTL colocalization
   print(paste("Starting analysis for locus", locus_index, "in tissue:", tissue, sep = " "))

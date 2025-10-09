@@ -54,17 +54,13 @@ tail -n +2 "${CSV_FILE}" | while IFS=',' read -r cohort ss_dir ss sex out_dir ou
 
   # Build the bsub command
   CMD=(bsub
-    -g /$USER/compute-belloy
-    -q subscription
-    -J "${JOB_NAME}"
-    -n 3
-    -o "${LOG_DIR}/${JOB_NAME}.%J.out"
-    -e "${LOG_DIR}/${JOB_NAME}.%J.err"
-    -R "span[hosts=1] rusage[mem=100000]"   # <-- FIX: pass as one argument
-    -M 100000
-    -G compute-belloy-t1
-    -sla compute-belloy-t1
-    -a docker(dmr07083/fusion-project:4.3.2)
+    -q subscription \
+    -J "${JOB_NAME}" \
+    -n 3 \
+    -o "${LOG_DIR}/${JOB_NAME}.%J.out" \
+    -e "${LOG_DIR}/${JOB_NAME}.%J.err" \
+    -R "span[hosts=1] rusage[mem=100000]" \
+    -a docker(satheshsiva27/multiomics-toolkit:0.1)
     # NOTE: Update the script path below if the location changes
     bash PWAS/analysis_codes/Brain_pwas_wrapper.bash
       --ss_dir "${ss_dir}"

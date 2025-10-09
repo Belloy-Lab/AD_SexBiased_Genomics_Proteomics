@@ -55,17 +55,13 @@ tail -n +2 "${CSV_FILE}" | while IFS=',' read -r cohort ss_dir ssx ssn sex out_d
 
   # Build the bsub command
   CMD=(bsub
-    -g /$USER/compute-belloy
-    -q subscription
-    -J "${JOB_NAME}"
-    -n 3
-    -o "${LOG_DIR}/${JOB_NAME}.%J.out"
-    -e "${LOG_DIR}/${JOB_NAME}.%J.err"
-    -R "span[hosts=1] rusage[mem=150000]"
-    -M 150000
-    -G compute-belloy-t1
-    -sla compute-belloy-t1
-    -a docker(dmr07083/fusion-project:4.3.2)
+    -q subscription \
+    -J "${JOB_NAME}" \
+    -n 3 \
+    -o "${LOG_DIR}/${JOB_NAME}.%J.out" \
+    -e "${LOG_DIR}/${JOB_NAME}.%J.err" \
+    -R "span[hosts=1] rusage[mem=60000]" \
+    -a docker(satheshsiva27/multiomics-toolkit:0.1)
     bash /storage2/fs1/belloy2/Active/04_Code/$USER/PWAS/CSF_pwas.bash
       --ss_dir "${ss_dir}"
       --ssx "${ssx}"

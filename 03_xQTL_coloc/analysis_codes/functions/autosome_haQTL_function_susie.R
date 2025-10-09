@@ -95,10 +95,10 @@ haQTL_colocalization <- function(merged, all_suggestive_snps, name_dset, out_dir
       
       
       pl <- "plink1.9"
-      in_fold <- "/storage1/fs1/belloy/Active/02_Data/01_Incoming/Belloy_2024_reference_genotype_data/EU_TOPMed/"
+      in_fold <- "/EU_TOPMed/"
       in_file <- paste0("TOPMed_ch", chrom)
       
-      fold_w <- "/storage1/fs1/belloy/Active/05_Projects/noahc/opt_QTL/Xchr_LD/haQTL/"
+      fold_w <- "/haQTL/"
       snp_file <- paste0(fold_w, study, "_", tissue, "_haQTL_", discovery, "_", locus_index, ".txt")
       fwrite(snps_for_ld, snp_file, sep = "\t", col.names = FALSE)
       

@@ -48,17 +48,13 @@ tail -n +2 "${CSV_FILE}" | while IFS=',' read -r cohort_dir cohort_tag sex in_di
   LOG_PREFIX="Br_PreClean_${sex_lc}_${cohort_tag}"
 
   CMD=(bsub
-    -g /$USER/compute-belloy
-    -J "${JOB_NAME}"
-    -n 1
-    -N
-    -o "${LOG_DIR}/${LOG_PREFIX}.%J.out"
-    -e "${LOG_DIR}/${LOG_PREFIX}.%J.err"
-    -q subscription
-    -R "rusage[mem=40GB] span[hosts=1]"
-    -G compute-belloy-t1
-    -sla compute-belloy-t1
-    -a docker(dmr07083/fusion-project:4.3.2)
+    -q subscription \
+    -J "${JOB_NAME}" \
+    -n 3 \
+    -o "${LOG_DIR}/${JOB_NAME}.%J.out" \
+    -e "${LOG_DIR}/${JOB_NAME}.%J.err" \
+    -R "span[hosts=1] rusage[mem=40000]" \
+    -a docker(satheshsiva27/multiomics-toolkit:0.1)
     # NOTE: Update the script path below if the location changes
     bash PWAS/analysis_codes/Brain_PreCleanup.bash
       --in_dir "${in_dir}"

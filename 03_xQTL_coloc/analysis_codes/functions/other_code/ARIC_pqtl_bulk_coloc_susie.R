@@ -5,7 +5,7 @@ print(paste("Starting preprocessing for tissue:", study, tissue, qtl_type, sep =
 
 ##########################################
 ## pQTL file list
-source_dir = "/storage1/fs1/belloy/Active/02_Data/01_Incoming/QTL/ARIC/EA/EA/"
+source_dir = "/Path_to_ARIC_PQTL_files/"
 pQTL_files = list.files(source_dir, pattern = ".glm.linear$", full.names = TRUE)
 
 
@@ -208,7 +208,7 @@ for (i in 1:nrow(all_suggestive_snps)) {
   
   
   ## Source pQTL SuSiE function
-  source("/storage2/fs1/belloy2/Active/04_Code/$USER/xQTL/functions/autosome_pQTL_function_susie.R")  
+  source("../autosome_pQTL_function_susie.R")  
   
   # Run pQTL colocalization
   print(paste("Starting analysis for locus", locus_index, "in tissue:", tissue, sep = " "))

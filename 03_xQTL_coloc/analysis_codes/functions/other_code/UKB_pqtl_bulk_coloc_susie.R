@@ -204,7 +204,7 @@ for (i in 1:nrow(all_suggestive_snps)) {
   
   
   ## Source caQTL function
-  source("/storage2/fs1/belloy2/Active/04_Code/$USER/xQTL/functions/autosome_pQTL_function_susie.R")  
+  source("../autosome_pQTL_function_susie.R")  
   
   # Run caQTL colocalization
   print(paste("Starting analysis for locus", locus_index, "in tissue:", tissue, sep = " "))

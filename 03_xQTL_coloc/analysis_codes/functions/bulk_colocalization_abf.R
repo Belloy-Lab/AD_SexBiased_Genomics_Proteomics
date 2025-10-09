@@ -177,21 +177,21 @@
     
     if (qtl_type == "eQTL") {
       ## Source eQTL ABF function - update function with appropriate input paramters
-      source("/storage2/fs1/belloy2/Active/04_Code/sivas/xQTL/functions/autosome_eQTL_function_abf.R") 
+      source("autosome_eQTL_function_abf.R") 
       # Run eQTL colocalization
       print(paste("Starting analysis for locus", locus_index, "in tissue:", tissue, sep = " "))
       result <- eQTL_colocalization(merged = merged_updated, all_suggestive_snps, name_dset, LC_dir, LC_threshold)
     
     } else if (qtl_type == "sQTL") {
       ## Source sQTL ABF function - update function with appropriate input paramters
-      source("/storage2/fs1/belloy2/Active/04_Code/sivas/xQTL/functions/autosome_sQTL_function_abf.R") 
+      source("autosome_sQTL_function_abf.R") 
       # Run sQTL colocalization
       print(paste("Starting analysis for locus", locus_index, "in tissue:", tissue, sep = " "))
       result <- sQTL_colocalization(merged = merged_updated, all_suggestive_snps, name_dset, LC_dir, LC_threshold)
       
     } else if (qtl_type == "pQTL") {
       ## Source pQTL ABF function - update function with appropriate input paramters
-      source("/storage2/fs1/belloy2/Active/04_Code/sivas/xQTL/functions/autosome_pQTL_function_abf.R") 
+      source("autosome_pQTL_function_abf.R") 
       # Run pQTL colocalization
       print(paste("Starting analysis for locus", locus_index, "in tissue:", tissue, sep = " "))
       result <- pQTL_colocalization(merged = merged_updated, all_suggestive_snps, name_dset, LC_dir, LC_threshold)
