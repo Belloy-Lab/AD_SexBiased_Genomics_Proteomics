@@ -1,4 +1,4 @@
-# 🧬 FUSION Project Docker Image (v4.3.2)
+# 🧬 Multi-omics toolkit Docker Image (v0.1)
 
 This Docker image provides a pre-configured environment for running the [FUSION](http://gusevlab.org/projects/fusion/) pipeline and other downstream analyses provided in this repository.
 

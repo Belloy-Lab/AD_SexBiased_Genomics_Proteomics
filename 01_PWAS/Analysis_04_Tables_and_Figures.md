@@ -12,14 +12,14 @@ bash analysis_codes/Sex_specificy_wrapper.bash
 ### Table S18 and 2
 
 ```bash
-bash analysis_codes/Sex_specificy_wrapper.bash
+bash analysis_codes/Tables_S18and2.R
 ```
 
 ## Figures
 ### Manhattan plots
 
 ```bash
-Rscript analysis_codes/PWAS_ManhattanPlot_BrainCSF_V2.R \
+Rscript analysis_codes/Manhattan_Plots.R \
   --path /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_all
 ```
 --remove_chr option in the script will remove the metioed chrosomes from teh plot 
@@ -27,7 +27,7 @@ Rscript analysis_codes/PWAS_ManhattanPlot_BrainCSF_V2.R \
 ### Scatter plot
 
 ```bash
-Rscript analysis_codes/PWAS_ScatterPlot_BrainCSF_V4.R \
+Rscript analysis_codes/Scatter_Plots.R \
   --path /storage2/fs1/belloy2/Active/05_Projects/sivas/PWAS/EU_all
 ```
 --remove_chr option in the script will remove the metioed chrosomes from teh plot 
