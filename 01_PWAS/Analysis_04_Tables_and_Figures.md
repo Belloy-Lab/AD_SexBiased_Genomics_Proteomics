@@ -50,7 +50,7 @@ Here, the --remove_genes and/or --remove_chr options can be used to exclude spec
     <td><img src="Images/CircosePlot.png" alt="Figure" width="350"/></td>
   </tr>
   <tr>
-    <td align="center"><b>Figurr:</b> Combined</td>
+    <td align="center"><b>Figure:</b> Circos plot</td>
   </tr>
 </table>
 
