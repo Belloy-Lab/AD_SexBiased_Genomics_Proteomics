@@ -16,27 +16,6 @@ Brain and CSF PWAS weights were derived from following references:
 | Brain  | https://doi.org/10.7303/syn51150434                    |
 | CSF    | https://neurogenomics.wustl.edu/open-science/raw-data/ |
 
-## Docker Images
-This project utilizes the following Docker images for various data processing tasks:
-
-1. dmr07083/fusion-project:4.3  
-Presented analyses were performed using this fusion-project Docker image developed by our lab.
-
-You can download and run the image with the following commands:
-```bash
-docker pull dmr07083/fusion-project:4.3
-docker run -i -t dmr07083/fusion-project:4.3 /bin/bash
-```
-For more details about this image and its usage, please refer to the Fusion_project.md file.
-
-2. continuumio/anaconda:latest  
-Some processing steps, such as mungestat cleaning, were performed using the publicly available Anaconda Docker image.
-
-To use this image, run:
-```bash
-docker pull continuumio/anaconda:latest
-docker run -i -t continuumio/anaconda:latest /bin/bash
-```
 
 **Citation:** If you use these scripts, please cite our paper:
 [Add preprint citation once available]
