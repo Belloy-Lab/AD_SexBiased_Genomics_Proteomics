@@ -1,7 +1,0 @@
-cohort_dir,cohort_tag,sex,in_dir,in_GWAS,out_GWAS,Nsize_GWAS,out_dir,pop
-EU_all,EUall,male,GWAS_sumstats,Stage1-2-3_EUR_Male_AD_GWAS,EUall.cleaned.male.brain,507675,PWAS/EU_all,EUR
-EU_all,EUall,female,GWAS_sumstats,Stage1-2-3_EUR_Female_AD_GWAS,EUall.cleaned.female.brain,636154,PWAS/EU_all,EUR
-EU_noUKB,noUKB,male,GWAS_sumstats,Stage1-3_EUR_Male_AD_GWAS,EUnoUKB.cleaned.male.brain,230632,PWAS/EU_noUKB,EUR
-EU_noUKB,noUKB,female,GWAS_sumstats,Stage1-3_EUR_Female_AD_GWAS,EUnoUKB.cleaned.female.brain,300237,PWAS/EU_noUKB,EUR
-AFR,AFR,male,GWAS_sumstats,Stage1_AFR-Admixed_Male_AD_GWAS,AFR.cleaned.male.brain,2116,PWAS/AFR,AFR
-AFR,AFR,female,GWAS_sumstats,Stage1_AFR-Admixed_Female_AD_GWAS,AFR.cleaned.female.brain,5149,PWAS/AFR,AFR

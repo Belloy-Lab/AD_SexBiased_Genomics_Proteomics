@@ -1,7 +1,0 @@
-cohort,ss_dir,ss,sex,out_dir,out_file
-EU_all,PWAS/EU_all,EUall.cleaned.male.brain.hg19_intersected.sumstats,male,PWAS/EU_all,EUall.cleaned.brain.male
-EU_all,PWAS/EU_all,EUall.cleaned.female.brain.hg19_intersected.sumstats,female,PWAS/EU_all,EUall.cleaned.brain.female
-EU_noUKB,PWAS/EU_noUKB,EUnoUKB.cleaned.male.brain.hg19_intersected.sumstats,male,PWAS/EU_noUKB,EUnoUKB.cleaned.brain.male
-EU_noUKB,PWAS/EU_noUKB,EUnoUKB.cleaned.female.brain.hg19_intersected.sumstats,female,PWAS/EU_noUKB,EUnoUKB.cleaned.brain.female
-AFR,PWAS/AFR,AFR.cleaned.male.brain.hg19_intersected.sumstats,male,PWAS/AFR,AFR.cleaned.brain.male
-AFR,PWAS/AFR,AFR.cleaned.female.brain.hg19_intersected.sumstats,female,PWAS/AFR,AFR.cleaned.brain.female
