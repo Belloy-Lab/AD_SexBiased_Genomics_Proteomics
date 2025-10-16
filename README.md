@@ -4,8 +4,7 @@
 To elucidate sex differences in Alzheimer’s disease (AD), we conducted the largest-to-date sex-stratified genome-wide association study (GWAS) and Proteome-wide association study (PWAS) of AD in brain and cerebrospinal fluid (CSF) proteogenomic datasets. This repository provides codes and files related to these analyses and a series of downstream analyses.
 
 ## Data availability
-GWAS summary statistics are available from the following Zenodo repository:  
-[Download](https://your-download-link.com) 
+GWAS summary statistics will be made available upon publication.
 
 Brain and CSF PWAS weights were derived from following references:
  1. Wingo, A. P. et al. Sex differences in brain protein expression and disease. Nat Med 29, 2224–2232 (2023).
