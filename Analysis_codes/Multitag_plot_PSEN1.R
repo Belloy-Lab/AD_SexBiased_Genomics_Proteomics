@@ -15,7 +15,7 @@ library(patchwork)
 library(grid)
 
 # souece the function script
-source("Analysis_codes/functions_overlay_plot.r")
+source("Analysis_codes/Multitag_plot_function.R")
 
 female_90 <- fread("/Path/to/Female/GWAS/summstat/file")
 
@@ -119,59 +119,3 @@ c5 <- get_ggplot_compare(merged_female_withld,merged_eQTL_catalogue_nedelec_naiv
                         FALSE,11.5,c(0,1,2,3,4,5,6),c("0","1","2","3","4","5","6"),out_dir)
 maxrows_num <- 15
 g <- get_ggplot_genetrack(maxrows_num,bp,merged_female_withld,merged_female_withld,rsid,rsid_2,rsid_3,out_dir,"PSEN1","PAPLN","HEATR4","cg24036523")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

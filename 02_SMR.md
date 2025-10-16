@@ -6,7 +6,6 @@ SMR analyses were conducted across GWAS and both Brain and CSF pQTL datasets to 
 Tool Reference: [SMR & HEIDI Software](https://yanglab.westlake.edu.cn/software/smr/#SMR&HEIDIanalysis)
 
 ```bash
-chmod +x smr
 
 # Run SMR Female
 smr --bfile 1KGP_ref_panel_in_plink_format/including/full/path \
