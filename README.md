@@ -17,7 +17,7 @@ Brain and CSF PWAS weights were derived from following references:
 
 
 **Citation:** If you use these scripts, please cite our paper:
-[Add preprint citation once available]
+https://www.medrxiv.org/content/10.1101/2025.10.31.25339089v1
 
 ## License (MIT)
 
